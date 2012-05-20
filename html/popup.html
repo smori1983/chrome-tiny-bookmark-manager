@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link href="/css/popup.css" rel="stylesheet" type="text/css" />
+<script src="/js/lib/jquery-1.7.2.js"></script>
+<script src="/js/lib/prototype-extensions/prototype-extensions.js"></script>
+<script src="/js/lib/smodules/smodules-0.1.js"></script>
+<script src="/js/tbm.front.js"></script>
+<script src="/js/main.popup.js"></script>
+</head>
+<body>
+<div id="header" class="wrap">
+    <h1 id="logo" class="wrap"></h1>
+    <img id="search-msg" src="/image/loading.gif" >
+    <form id="search-form">
+        <input id="search-query" type="text" value="" placeholder="[folder] [tag] or keyword ..." />
+    </form>
+    <div id="tab">
+        <div><a id="tab-main" href="#body-main">Main</a></div>
+        <div><a id="tab-tags" href="#body-tags">Folders &amp; Tags</a></div>
+        <div><a id="tab-data" href="#body-data">Data</a></div>
+        <div><a id="tab-fav"  href="#body-fav">Favorites</a></div>
+    </div>
+</div>
+<div id="body">
+    <div id="body-main" class="tab-content">
+        <div id="search-result" class="menu">
+            <div class="label">
+                <span id="search-result-label"></span>: <span id="search-result-summary"></span>
+                <span id="add-favorite-button" class="wrap">favorite</span>
+            </div>
+            <div id="search-result-content" class="content"></div>
+        </div><!-- #search-result -->
+    </div>
+    <div id="body-tags" class="tab-content">
+        <div id="found-folders" class="menu">
+            <div id="found-folders-label" class="label"></div>
+            <div id="found-folders-content" class="content"></div>
+        </div><!-- #found-folders -->
+        <div id="found-tags" class="menu">
+            <div id="found-tags-label" class="label"></div>
+            <div id="found-tags-content" class="content"></div>
+        </div><!-- #found-tags -->
+    </div>
+    <div id="body-data" class="tab-content">
+        <div id="recent-search" class="menu">
+            <div id="recent-search-label" class="label"></div>
+            <div id="recent-search-content" class="content"></div>
+        </div><!-- #recent-search -->
+        <div id="frequent-search" class="menu">
+            <div id="frequent-search-label" class="label"></div>
+            <div id="frequent-search-content" class="content"></div>
+        </div><!-- #frequent-search -->
+    </div>
+    <div id="body-fav" class="tab-content">
+        <div id="favorite-query" class="menu">
+            <div id="favorite-query-label" class="label"></div>
+            <div id="favorite-query-content" class="content"></div>
+        </div><!-- #favorite-query -->
+    </div>
+</div>
+</body>
+</html>

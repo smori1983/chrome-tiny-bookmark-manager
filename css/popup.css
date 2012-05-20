@@ -1,0 +1,232 @@
+@charset "UTF-8";
+
+html {
+    width: 500px;
+    font-family: "PT Sans", "DejaVu Sans";
+    font-size: 12px;
+    background: #eeeeee;
+}
+body {
+    overflow: hidden;
+    margin: 0px;
+}
+.wrap {
+    -webkit-user-select: none;
+}
+/***********************************************/
+#header {
+    overflow: hidden;
+    position: relative;
+    border-bottom: 2px solid #666666;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 10px #333333;
+}
+#logo {
+    position: absolute;
+    bottom: 0px;
+    right: 5px;
+    line-height: 20px;
+    font-size: 12px;
+    color: #dddddd;
+    text-shadow: 0px 0px 3px #444444;
+    margin: 0px;
+    padding: 0px;
+}
+#search-msg {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    display: none;
+}
+#search-form {
+    background: #444444;
+    padding: 8px 0px;
+}
+#search-query {
+    display: block;
+    width: 300px;
+    height: 18px;
+    font-family: "PT Sans", "DejaVu Sans";
+    letter-spacing: 1px;
+    border: 2px solid #cccccc;
+    margin: 0px auto;
+    padding: 2px;
+}
+#tab {
+    overflow: hidden;
+    background: #cccccc;
+}
+#tab > div {
+    float: left;
+    margin: 0px 1px 1px 0px;
+}
+#tab > div > a {
+    display: block;
+    line-height: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: #444444;
+    background: #aaaaaa;
+    padding: 0px 10px;
+}
+#tab > div > a.mouse {
+    color: #eeeeee;
+    background: #888888;
+}
+#tab > div > a.selected {
+    color: #eeeeee;
+    background: #666666;
+}
+/***********************************************/
+#body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 450px;
+    margin-bottom: 5px;
+}
+#body > .tab-content {
+    overflow: hidden;
+    margin: 10px;
+}
+/***********************************************/
+.menu {
+    display: none;
+    margin-bottom: 20px;
+}
+.menu .label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+.menu .content {
+    overflow: hidden;
+}
+/***********************************************/
+#add-favorite-button {
+    color: #cccccc;
+    border: 1px solid #cccccc;
+    padding: 0px 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+#add-favorite-button.mouse {
+    color: #666666;
+    border: 1px solid #666666;
+}
+#add-favorite-button.fav {
+    color: #aa0000;
+    border: 1px solid #aa0000;
+}
+/***********************************************/
+.bookmark-item {
+    position: relative;
+    border-bottom: 1px solid #cccccc;
+    margin: 0px 0px 10px;
+    padding: 0px 0px 5px;
+}
+.bookmark-item .edit-bound {
+    position: relative;
+}
+.bookmark-item .edit-bound .title {
+    margin: 0px 50px 5px 0px;
+}
+.bookmark-item .edit-bound .title a {
+    font-weight: bold;
+    color: #0044cc;
+    margin-bottom: 5px;
+}
+.bookmark-item .edit-bound .title a:visited {
+    color: #555599;
+}
+.bookmark-item .edit-bound .edit-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #cccccc;
+    border: 1px solid #cccccc;
+    padding: 0px 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.bookmark-item .edit-bound .edit-button.mouse {
+    color: #666666;
+    border: 1px solid #666666;
+}
+.bookmark-item .folder-hierarchy {
+    color: #666666;
+}
+/***********************************************/
+.bookmark-edit {
+    margin-bottom: 5px;
+}
+.bookmark-edit .title {
+    display: block;
+    width: 400px;
+    font-family: "PT Sans", "DejaVu Sans";
+    letter-spacing: 1px;
+    border: 1px solid #cccccc;
+}
+/***********************************************/
+#recent-search {
+    float: left;
+    width: 50%;
+}
+#recent-search-content .item .query {
+    color: #0044cc;
+    cursor: pointer;
+}
+#frequent-search {
+    margin-left: 50%;
+}
+#frequent-search-content .item .query {
+    color: #0044cc;
+    cursor: pointer;
+}
+/***********************************************/
+#recent-bookmark-content .item a {
+    color: #0044cc;
+}
+/***********************************************/
+#found-folders-content .item {
+    float: left;
+    margin: 0px 10px 5px 0px;
+}
+#found-folders-content .item .name {
+    color: #0044cc;
+    cursor: pointer;
+}
+/***********************************************/
+#found-tags-content .item {
+    float: left;
+    margin: 0px 10px 5px 0px;
+}
+#found-tags-content .item .name {
+    color: #0044cc;
+    cursor: pointer;
+}
+/***********************************************/
+#favorite-query-content .item {
+    position: relative;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 10px;
+    padding: 1px 0px 5px;
+}
+#favorite-query-content .item .query {
+    color: #0044cc;
+    cursor: pointer;
+}
+#favorite-query-content .item .favorite-remove-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #cccccc;
+    border: 1px solid #cccccc;
+    padding: 0px 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+#favorite-query-content .item .favorite-remove-button.mouse {
+    color: #666666;
+    border: 1px solid #666666;
+}

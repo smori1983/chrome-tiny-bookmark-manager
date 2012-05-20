@@ -1,0 +1,91 @@
+{
+    "meta_name": {
+        "message": "tiny bookmark manager"
+    },
+    "meta_description": {
+        "message": "クエリ検索を補強します。"
+    },
+
+    "label_recentSearch": {
+        "message": "最近検索されたクエリ"
+    },
+    "label_frequentSearch": {
+        "message": "よく検索されるクエリ"
+    },
+    "label_recentBookmark": {
+        "message": "最近ブックマークしたページ"
+    },
+    "label_foundFolders": {
+        "message": "フォルダ一覧"
+    },
+    "label_foundTags": {
+        "message": "タグ一覧"
+    },
+    "label_favoriteQuery": {
+        "message": "お気に入りのクエリ"
+    },
+    "label_searchResult": {
+        "message": "検索結果"
+    },
+
+    "options_tag_title": {
+        "message": "オプション & ヘルプ"
+    },
+    "options_id_h2_options": {
+        "message": "オプション"
+    },
+    "options_id_h3_logging": {
+        "message": "ログ設定"
+    },
+    "options_id_label_latest_query": {
+        "message": "ポップアップを開いた時、最後に検索したクエリを自動的に入力する。"
+    },
+    "options_id_label_query_store_days": {
+        "message": "クエリを保存する。"
+    },
+    "options_id_query_store_days_unit": {
+        "message": "日"
+    },
+    "options_id_h2_help": {
+        "message": "ヘルプ"
+    },
+    "options_id_h3_tags": {
+        "message": "タグ"
+    },
+    "options_id_p_tags_0": {
+        "message": "ブックマークタイトルの先頭に、{{code:[タグ]}} のような記述があれば、それをタグとして認識します。"
+    },
+    "options_id_p_tags_1": {
+        "message": "例えば、タイトルが {{code:[google][search]google}} の場合、 {{code:[google]}} と {{code:[search]}} がタグになります。"
+    },
+
+    "options_id_h3_search": {
+        "message": "検索"
+    },
+    "options_id_p_search_0": {
+        "message": "大文字・小文字の区別はしません。"
+    },
+    "options_id_p_search_1": {
+        "message": "検索の際、{{code:[hoge]}} と入力すればフォルダまたはタグを検索します。"
+    },
+    "options_id_p_search_2": {
+        "message": "例えば、{{code:[IT]}} で検索すれば、{{code:Italy}} というタイトルのブックマークを検索対象から除外できます。"
+    },
+    "options_id_p_search_3": {
+        "message": "検索対象はフォルダとタグを含むタイトルです。URLは含まれません。"
+    },
+
+    "options_id_h3_edit": {
+        "message": "編集"
+    },
+    "options_id_p_edit_0": {
+        "message": "検索結果画面では、タイトルのみブックマークの編集ができます。"
+    },
+
+    "options_class_answer_yes": {
+        "message": "はい"
+    },
+    "options_class_answer_no": {
+        "message": "いいえ"
+    }
+}

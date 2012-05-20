@@ -1,0 +1,91 @@
+{
+    "meta_name": {
+        "message": "tiny bookmark manager"
+    },
+    "meta_description": {
+        "message": "This extension reinforces keyword search."
+    },
+
+    "label_recentSearch": {
+        "message": "recently searched queries"
+    },
+    "label_frequentSearch": {
+        "message": "frequently searched queries"
+    },
+    "label_recentBookmark": {
+        "message": "recently bookmarked pages"
+    },
+    "label_foundFolders": {
+        "message": "folders"
+    },
+    "label_foundTags": {
+        "message": "tags"
+    },
+    "label_favoriteQuery": {
+        "message": "favorite queries"
+    },
+    "label_searchResult": {
+        "message": "search result"
+    },
+
+    "options_tag_title": {
+        "message": "options and help"
+    },
+    "options_id_h2_options": {
+        "message": "OPTIONS"
+    },
+    "options_id_h3_logging": {
+        "message": "logging"
+    },
+    "options_id_label_latest_query": {
+        "message": "Restore the latest query when you open the popup."
+    },
+    "options_id_label_query_store_days": {
+        "message": "Save queries."
+    },
+    "options_id_query_store_days_unit": {
+        "message": "days"
+    },
+    "options_id_h2_help": {
+        "message": "HELP"
+    },
+    "options_id_h3_tags": {
+        "message": "tags"
+    },
+    "options_id_p_tags_0": {
+        "message": "If there are descriptions like {{code:[tag]}} in the head of bookmark titles, they are treated as tags."
+    },
+    "options_id_p_tags_1": {
+        "message": "For example, {{code:[google]}} and {{code:[search]}} are the tags if the title is {{code:[google][search]google}}."
+    },
+
+    "options_id_h3_search": {
+        "message": "search"
+    },
+    "options_id_p_search_0": {
+        "message": "Search query is case-insensitive."
+    },
+    "options_id_p_search_1": {
+        "message": "If you input a word like {{code:[hoge]}}, it will be searched as folder or tag."
+    },
+    "options_id_p_search_2": {
+        "message": "For example, If you search with {{code:[IT]}}, you can exclude bookmark whose title is {{code:Italy}} from search result."
+    },
+    "options_id_p_search_3": {
+        "message": "Search target is folders and titles (includes tags). URLs are excluded."
+    },
+
+    "options_id_h3_edit": {
+        "message": "edit"
+    },
+    "options_id_p_edit_0": {
+        "message": "In the search result, you can edit bookmark titles."
+    },
+
+    "options_class_answer_yes": {
+        "message": "yes"
+    },
+    "options_class_answer_no": {
+        "message": "no"
+    }
+}
