@@ -98,10 +98,10 @@ tbm.background = (function() {
                     inProgress = true;
                     window.setTimeout(function() {
                         if (eventCount <= 1) {
-                            smodules.util.debug("%4d execute() called.".format(eventCount));
+                            smodules.util.console.log("%4d execute() called.".format(eventCount));
                             execute();
                         } else {
-                            smodules.util.debug("%4d execute() not called.".format(eventCount));
+                            smodules.util.console.log("%4d execute() not called.".format(eventCount));
                             inProgress = false;
                             eventCount = Math.floor(eventCount / 2);
                             update(true);

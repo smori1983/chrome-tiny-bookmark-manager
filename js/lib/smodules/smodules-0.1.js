@@ -4,7 +4,7 @@
  * Copyright (c) 2012 smori <smori1983@gmail.com>
  * Dual licensed under the MIT or GPL-2.0 licenses.
  *
- * Date 2012-05-19 20:37:45
+ * Date 2012-05-24 02:03:48
  */
 
 var smodules = {};
@@ -89,23 +89,50 @@ smodules.ui.tab = (function() {
     };
 })();
 
-smodules.util.debug = (function() {
-    var isDebug = false;
-
-    var that = function(message) {
-        if (isDebug) {
-            console.log(message);
-        }
-    };
+/**
+ * smodules.util.console
+ *
+ * on()
+ * off()
+ * log(message)
+ * time(tag)
+ * timeEnd(tag)
+ */
+smodules.util.console = (function() {
+    var that = {},
+        on   = false;
 
     that.on = function() {
-        isDebug = true;
+        on = true;
+        return that;
     };
 
     that.off = function() {
-        isDebug = false;
+        on = false;
+        return that;
     };
 
+    that.log = function(message) {
+        if (on) {
+            console.log(message);
+        }
+        return that;
+    };
+
+    that.time = function(tag) {
+        if (on) {
+            console.time(tag);
+        }
+        return that;
+    };
+
+    that.timeEnd = function(tag) {
+        if (on) {
+            console.timeEnd(tag);
+        }
+        return that;
+    };
+    
     return that;
 })();
 
@@ -209,6 +236,11 @@ smodules.template = (function() {
 
     var that = function(templateFile, bindParams) {
         return {
+            get: function(callback) {
+                execute(templateFile, bindParams, function(response) {
+                    callback(response);
+                });
+            },
 /*
             display: function() {
                 execute(templateFile, bindParams, function(response) {
@@ -229,9 +261,22 @@ smodules.template = (function() {
         };
     };
 
+    that.preFetch = function(templateSrc) {
+        if (isRemoteFile(templateSrc)) {
+            $.ajax({
+                url: templateSrc,
+                success: function(response) {
+                    loadedTemplateFiles[templateSrc] = response;
+                }
+            });
+        }
+        return that;
+    };
+
     that.setDelimiter = function(left, right) {
         delimL = regexQuote(left);
         delimR = regexQuote(right);
+        return that;
     };
 
     return that;

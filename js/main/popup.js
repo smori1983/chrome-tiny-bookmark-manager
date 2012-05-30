@@ -9,6 +9,15 @@ $(function() {
 
         isManualSubmit = true;
 
+    // template prefetch
+    smodules.template.
+        preFetch("/template/bookmark-edit.html").
+        preFetch("/template/bookmark-item.html").
+        preFetch("/template/favorite-query.html").
+        preFetch("/template/found-folders.html").
+        preFetch("/template/found-tags.html").
+        preFetch("/template/frequent-search.html").
+        preFetch("/template/recent-search.html");
 
     // i18n
     $("#recent-search-label").text(i18n("label_recentSearch"));
