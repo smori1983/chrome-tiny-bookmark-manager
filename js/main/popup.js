@@ -6,6 +6,7 @@ $(function() {
 
         details = chrome.app.getDetails(),
         i18n    = chrome.i18n.getMessage,
+        locale  = window.navigator.language === "ja" ? "ja" : "en",
 
         isManualSubmit = true;
 
@@ -20,13 +21,7 @@ $(function() {
         preFetch("/template/recent-search.html");
 
     // i18n
-    $("#recent-search-label").text(i18n("label_recentSearch"));
-    $("#frequent-search-label").text(i18n("label_frequentSearch"));
-    $("#recent-bookmark-label").text(i18n("label_recentBookmark"));
-    $("#found-folders-label").text(i18n("label_foundFolders"));
-    $("#found-tags-label").text(i18n("label_foundTags"));
-    $("#favorite-query-label").text(i18n("label_favoriteQuery"));
-    $("#search-result-label").text(i18n("label_searchResult"));
+    tbm.util.i18n(locale, "popup");
 
     // setting init
     tbm.user.query.

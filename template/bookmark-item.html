@@ -1,9 +1,12 @@
-<div id="bookmark-{{id}}" class="bookmark-item">
+<div id="bookmark-{$id|h}" class="bookmark-item">
+    <form class="bookmark-edit">
+        <input type="text" class="title" name="title" value="{$title|h}" />
+    </form>
     <div class="edit-bound">
         <div class="title">
-            <a href="{{url}}" title="{{url}}" target="_blank">{{title}}</a>
+            <a href="{$url|h}" title="{$url|h}" target="_blank">{$title|h}</a>
         </div>
         <span class="edit-button wrap">edit</span>
     </div>
-    <div class="folder-hierarchy">{{folders}}</span>
+    <div class="folder-hierarchy">{$folders|h}</span>
 </div>

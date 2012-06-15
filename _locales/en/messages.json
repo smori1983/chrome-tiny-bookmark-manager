@@ -3,28 +3,28 @@
         "message": "tiny bookmark manager"
     },
     "meta_description": {
-        "message": "This extension reinforces keyword search."
+        "message": "This extension reinforces bookmark search."
     },
 
-    "label_recentSearch": {
+    "popup_id_recent_search_label": {
         "message": "recently searched queries"
     },
-    "label_frequentSearch": {
+    "popup_id_frequent_search_label": {
         "message": "frequently searched queries"
     },
-    "label_recentBookmark": {
+    "popup_id_recent_bookmark_label": {
         "message": "recently bookmarked pages"
     },
-    "label_foundFolders": {
+    "popup_id_found_folders_label": {
         "message": "folders"
     },
-    "label_foundTags": {
+    "popup_id_found_tags_label": {
         "message": "tags"
     },
-    "label_favoriteQuery": {
+    "popup_id_favorite_query_label": {
         "message": "favorite queries"
     },
-    "label_searchResult": {
+    "popup_id_search_result_label": {
         "message": "search result"
     },
 
@@ -41,7 +41,7 @@
         "message": "Restore the latest query when you open the popup."
     },
     "options_id_label_query_store_days": {
-        "message": "Save queries."
+        "message": "Days to save queries"
     },
     "options_id_query_store_days_unit": {
         "message": "days"

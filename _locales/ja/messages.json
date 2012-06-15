@@ -3,28 +3,28 @@
         "message": "tiny bookmark manager"
     },
     "meta_description": {
-        "message": "クエリ検索を補強します。"
+        "message": "ブックマーク検索を補強します。"
     },
 
-    "label_recentSearch": {
+    "popup_id_recent_search_label": {
         "message": "最近検索されたクエリ"
     },
-    "label_frequentSearch": {
+    "popup_id_frequent_search_label": {
         "message": "よく検索されるクエリ"
     },
-    "label_recentBookmark": {
+    "popup_id_recent_bookmark_label": {
         "message": "最近ブックマークしたページ"
     },
-    "label_foundFolders": {
+    "popup_id_found_folders_label": {
         "message": "フォルダ一覧"
     },
-    "label_foundTags": {
+    "popup_id_found_tags_label": {
         "message": "タグ一覧"
     },
-    "label_favoriteQuery": {
+    "popup_id_favorite_query_label": {
         "message": "お気に入りのクエリ"
     },
-    "label_searchResult": {
+    "popup_id_search_result_label": {
         "message": "検索結果"
     },
 
@@ -38,10 +38,10 @@
         "message": "ログ設定"
     },
     "options_id_label_latest_query": {
-        "message": "ポップアップを開いた時、最後に検索したクエリを自動的に入力する。"
+        "message": "ポップアップを開いた時、最後に検索したクエリを自動的に入力する"
     },
     "options_id_label_query_store_days": {
-        "message": "クエリを保存する。"
+        "message": "クエリを保存する日数"
     },
     "options_id_query_store_days_unit": {
         "message": "日"

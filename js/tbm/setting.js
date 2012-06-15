@@ -1,9 +1,6 @@
 /**
  * tbm.setting
- *
- * openType
  */
-tbm.setting = tbm.setting || {};
 tbm.setting = (function() {
     var that   = {},
         prefix = "setting.log",
@@ -24,8 +21,8 @@ tbm.setting = (function() {
     that.get = function(key) {
         var data = smodules.storage.get(getKey(key));
 
-        if (data === null) {
-            return defaults.hasOwnProperty(key) ? defaults[key] : data;
+        if (data === null && defaults.hasOwnProperty(key)) {
+            return defaults[key];
         } else {
             return data;
         }
