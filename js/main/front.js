@@ -10,7 +10,7 @@ tbm.main.showRecentSearchItems = (function() {
 
         if (data.length > 0) {
             $(content).empty();
-            smodules.template(template, data).appendTo(content);
+            smodules.template(template, { data: data }).appendTo(content);
             $(menu).show();
         } else {
             $(menu).hide();
@@ -27,7 +27,7 @@ tbm.main.showFrequentSearchItems = (function() {
 
         if (data.length > 0) {
             $(content).empty();
-            smodules.template(template, data).appendTo(content);
+            smodules.template(template, { data: data }).appendTo(content);
             $(menu).show();
         } else {
             $(menu).hide();
@@ -42,15 +42,11 @@ tbm.main.showBookmarkFolders = (function() {
         background = chrome.extension.getBackgroundPage().tbm.background;
 
     return function() {
-        var folders = [];
-
-        $.each(background.getFolders(), function(idx, folder) {
-            folders.push({ name: folder });
-        });
+        var folders = background.getFolders();
 
         if (folders.length > 0) {
             $(content).empty();
-            smodules.template(template, folders).appendTo(content);
+            smodules.template(template, { folders: folders }).appendTo(content);
             $(menu).show();
         } else {
             $(menu).hide();
@@ -65,15 +61,11 @@ tbm.main.showBookmarkTags = (function() {
         background = chrome.extension.getBackgroundPage().tbm.background;
 
     return function() {
-        var tags = [];
-
-        $.each(background.getTags(), function(idx, tag) {
-            tags.push({ name: tag });
-        });
+        var tags = background.getTags();
 
         if (tags.length > 0) {
             $(content).empty();
-            smodules.template(template, tags).appendTo(content);
+            smodules.template(template, { tags: tags }).appendTo(content);
             $(menu).show();
         } else {
             $(menu).hide();
@@ -86,11 +78,11 @@ tbm.main.showFavoriteQueries = (function() {
         template = "/template/favorite-query.html";
 
     return function() {
-        var data = tbm.user.favorite.getAll();
+        var queries = tbm.user.favorite.getAll();
 
-        if (data.length > 0) {
+        if (queries.length > 0) {
             $(content).empty();
-            smodules.template(template, data).appendTo(content);
+            smodules.template(template, { queries: queries }).appendTo(content);
             $(menu).show();
         } else {
             $(menu).hide();

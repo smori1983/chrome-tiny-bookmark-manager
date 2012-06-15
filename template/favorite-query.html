@@ -1,4 +1,6 @@
+{for $query in $queries}
 <div class="item">
-    <span class="query">{$query|h}</span>
+    <span class="query">{$query.query|h}</span>
     <span class="favorite-remove-button wrap">remove</span>
 </div>
+{/for}

@@ -105,6 +105,23 @@ $(function() {
         { id: "#favorite-query-content",  className: "query", tagged: true }
     ]);
 
+    var selectTagsTab = function(e) {
+        tbm.main.showBookmarkFolders();
+        tbm.main.showBookmarkTags();
+        e.preventDefault();
+    };
+
+    var selectDataTab = function(e) {
+        tbm.main.showRecentSearchItems();
+        tbm.main.showFrequentSearchItems();
+        e.preventDefault();
+    };
+
+    var selectFavoriteTab = function(e) {
+        tbm.main.showFavoriteQueries();
+        e.preventDefault();
+    };
+
     // tab 'TAGS'
     $("#tab-tags").click(function(e) {
         e.preventDefault();
