@@ -15,12 +15,12 @@ $(function() {
     // template prefetch
     smodules.template.
         preFetch("/template/bookmark-edit.html").
-        preFetch("/template/bookmark-item.html").
-        preFetch("/template/favorite-query.html").
-        preFetch("/template/found-folders.html").
-        preFetch("/template/found-tags.html").
-        preFetch("/template/frequent-search.html").
-        preFetch("/template/recent-search.html");
+        preFetch("/template/bookmark-item-set.html").
+        preFetch("/template/favorite-query-set.html").
+        preFetch("/template/found-folder-set.html").
+        preFetch("/template/found-tag-set.html").
+        preFetch("/template/frequent-search-set.html").
+        preFetch("/template/recent-search-set.html");
 
     // i18n
     tbm.util.i18n(locale, "popup");
@@ -39,7 +39,7 @@ $(function() {
             content  = "#search-result-content",
             summary  = "#search-result-summary",
             favorite = "#add-favorite-button",
-            template = "/template/bookmark-item.html";
+            template = "/template/bookmark-item-set.html";
 
         return function(e) {
             e.preventDefault();

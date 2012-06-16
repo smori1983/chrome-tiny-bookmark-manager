@@ -8,7 +8,7 @@ tbm.main.sendRequest = function(path, data, callback) {
 tbm.main.showRecentSearchItems = (function() {
     var menu      = "#recent-search",
         content   = "#recent-search-content",
-        template  = "/template/recent-search.html",
+        template  = "/template/recent-search-set.html",
         timestamp = null;
 
     return function() {
@@ -30,7 +30,7 @@ tbm.main.showRecentSearchItems = (function() {
 tbm.main.showFrequentSearchItems = (function() {
     var menu      = "#frequent-search",
         content   = "#frequent-search-content",
-        template  = "/template/frequent-search.html",
+        template  = "/template/frequent-search-set.html",
         timestamp = null;
 
     return function() {
@@ -52,7 +52,7 @@ tbm.main.showFrequentSearchItems = (function() {
 tbm.main.showBookmarkFolders = (function() {
     var menu      = "#found-folders",
         content   = "#found-folders-content",
-        template  = "/template/found-folders.html",
+        template  = "/template/found-folder-set.html",
         timestamp = null;
 
     return function() {
@@ -74,7 +74,7 @@ tbm.main.showBookmarkFolders = (function() {
 tbm.main.showBookmarkTags = (function() {
     var menu      = "#found-tags",
         content   = "#found-tags-content",
-        template  = "/template/found-tags.html",
+        template  = "/template/found-tag-set.html",
         timestamp = null;
 
     return function() {
@@ -96,7 +96,7 @@ tbm.main.showBookmarkTags = (function() {
 tbm.main.showFavoriteQueries = (function() {
     var menu      = "#favorite-query",
         content   = "#favorite-query-content",
-        template  = "/template/favorite-query.html",
+        template  = "/template/favorite-query-set.html",
         timestamp = null;
 
     return function() {

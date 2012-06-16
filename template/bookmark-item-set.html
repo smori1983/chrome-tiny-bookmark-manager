@@ -1,0 +1,14 @@
+{for $bookmark in $bookmarks}
+<div id="bookmark-{$bookmark.id|h}" class="bookmark-item">
+    <form class="bookmark-edit">
+        <input type="text" class="title bookmark-edit-title" name="title" value="{$bookmark.title|h}" />
+    </form>
+    <div class="edit-bound">
+        <div class="title">
+            <a href="{$bookmark.url|h}" title="{$bookmark.url|h}" target="_blank">{$bookmark.title|h}</a>
+        </div>
+        <span class="edit-button wrap">edit</span>
+    </div>
+    <div class="folder-hierarchy">{$bookmark.folders|h}</div>
+</div>
+{/for}
