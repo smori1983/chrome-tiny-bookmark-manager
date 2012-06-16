@@ -9,6 +9,7 @@ $(function() {
         locale  = window.navigator.language === "ja" ? "ja" : "en",
 
         query = "",
+        bookmarkRenderer = null,
 
         isManualSubmit = true;
 
@@ -44,6 +45,11 @@ $(function() {
         return function(e) {
             e.preventDefault();
 
+            if (bookmarkRenderer) {
+                bookmarkRenderer.stop();
+                bookmarkRenderer = null;
+            }
+
             $(tab).click();
 
             if ((query = $(searchQuery).val()).length === 0) {
@@ -59,7 +65,15 @@ $(function() {
                 $(summary).text("%s (%d)".format(query, response.data.length));
 
                 if (response.data.length > 0) {
-                    smodules.template(template, { bookmarks: response.data }).appendTo(content);
+                    bookmarkRenderer = tbm.util.delayedArrayAccess({
+                        array: response.data,
+                        interval: 300,
+                        step: 20,
+                        together: true,
+                        callback: function(bookmarks) {
+                            smodules.template(template, { bookmarks: bookmarks }).appendTo(content);
+                        }
+                    }).start();
                     tbm.main.checkFavoriteStatus(query);
                     $(favorite).show();
 
