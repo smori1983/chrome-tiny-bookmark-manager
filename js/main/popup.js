@@ -8,6 +8,8 @@ $(function() {
         i18n    = chrome.i18n.getMessage,
         locale  = window.navigator.language === "ja" ? "ja" : "en",
 
+        query = "",
+
         isManualSubmit = true;
 
     // template prefetch
@@ -23,12 +25,6 @@ $(function() {
     // i18n
     tbm.util.i18n(locale, "popup");
 
-    // setting init
-    tbm.user.query.
-        setStoreDays(tbm.setting.get("query_store_days")).
-        setRecentFetchSize(20).
-        setFrequentFetchSize(20);
-
     // ui init
     $("#logo").text("version %s".format(details.version));
     $(searchQuery).focus();
@@ -38,8 +34,7 @@ $(function() {
 
     // search form submit
     $(searchForm).submit(function() {
-        var query,
-            tab      = "#tab-main",
+        var tab      = "#tab-main",
             menu     = "#search-result",
             content  = "#search-result-content",
             summary  = "#search-result-summary",
@@ -51,8 +46,7 @@ $(function() {
 
             $(tab).click();
 
-            query = $(searchQuery).val();
-            if (query.length === 0) {
+            if ((query = $(searchQuery).val()).length === 0) {
                 return;
             }
 
@@ -60,20 +54,17 @@ $(function() {
             $(menu).hide();
             $(favorite).hide();
 
-            tbm.bookmark.search.execute(query, function(hits) {
+            tbm.main.sendRequest("/bookmark/search", { query: query }, function(response) {
                 $(content).empty();
-                $(summary).text("%s (%d)".format(query, hits.length));
+                $(summary).text("%s (%d)".format(query, response.data.length));
 
-                if (hits.length > 0) {
-                    hits.sort(function(a, b) {
-                        return a.title.compare(b.title);
-                    });
-                    smodules.template(template, hits).appendTo(content);
+                if (response.data.length > 0) {
+                    smodules.template(template, { bookmarks: response.data }).appendTo(content);
                     tbm.main.checkFavoriteStatus(query);
                     $(favorite).show();
 
                     if (isManualSubmit) {
-                        tbm.user.query.add(query);
+                        tbm.main.sendRequest("/user/query/add", { query: query });
                     }
                 }
                 isManualSubmit = true;
@@ -105,31 +96,14 @@ $(function() {
         { id: "#favorite-query-content",  className: "query", tagged: true }
     ]);
 
-    var selectTagsTab = function(e) {
-        tbm.main.showBookmarkFolders();
-        tbm.main.showBookmarkTags();
-        e.preventDefault();
-    };
-
-    var selectDataTab = function(e) {
-        tbm.main.showRecentSearchItems();
-        tbm.main.showFrequentSearchItems();
-        e.preventDefault();
-    };
-
-    var selectFavoriteTab = function(e) {
-        tbm.main.showFavoriteQueries();
-        e.preventDefault();
-    };
-
-    // tab 'TAGS'
+    // tab 'Folders & Tags'
     $("#tab-tags").click(function(e) {
         e.preventDefault();
         tbm.main.showBookmarkFolders();
         tbm.main.showBookmarkTags();
     });
 
-    // tab 'DATA'
+    // tab 'Data'
     $("#tab-data").click(function(e) {
         e.preventDefault();
         tbm.main.showRecentSearchItems();
@@ -137,7 +111,7 @@ $(function() {
         //tbm.main.showRecentBookmarkItems();
     });
 
-    // tab 'FAVORITE'
+    // tab 'Favorites'
     $("#tab-fav").click(function(e) {
         e.preventDefault();
         tbm.main.showFavoriteQueries();
@@ -162,7 +136,7 @@ $(function() {
 
         $("body").click(function(e) {
             smodules.ui.hasId(e, id, function(target) {
-                tbm.main.toggleFavoriteStatus($(searchQuery).val());
+                tbm.main.toggleFavoriteStatus(query);
             });
         }).mouseover(function(e) {
             smodules.ui.hasId(e, id, function(target) {
@@ -181,9 +155,10 @@ $(function() {
 
         $("body").click(function(e) {
             smodules.ui.hasClass(e, className, function(target) {
-                tbm.user.favorite.remove($(target).prev().text());
+                tbm.main.sendRequest("/user/query/favorite/remove", { query: $(target).prev().text() });
                 $(target).parent().remove();
                 tbm.main.showFavoriteQueries();
+                tbm.main.checkFavoriteStatus(query);
             });
         }).mouseover(function(e) {
             smodules.ui.hasClass(e, className, function(target) {
@@ -198,46 +173,36 @@ $(function() {
 
     // edit bookmark title
     (function() {
-        var button   = "edit-button",
-            menu     = "bookmark-edit",
-            template = "/template/bookmark-edit.html",
-
-            editBound = null,
-            id = null;
-
-        var reset = function() {
-            if (editBound) {
-                $("." + menu).remove();
-                $(editBound).show();
-                editBound = id = null;
-            }
-        };
+        var button    = "edit-button",
+            menu      = "bookmark-edit",
+            editTitle = "bookmark-edit-title",
+            template  = "/template/bookmark-edit.html";
 
         $("body").click(function(e) {
             smodules.ui.hasClass(e, button, function(target) {
-                reset();
-                editBound = $(target).parent();
-                id = $(editBound).parent().attr("id").replace("bookmark-", "");
+                var editBound = $(target).parent(),
+                    form      = editBound.prev();
 
-                smodules.template(template, {
-                    id: id,
-                    title: $(editBound).find("a:first").text()
-                }).insertBefore(editBound);
-                $(editBound).hide();
-            }, function(target) {
-                smodules.ui.hasClass(e, "title", function(target) {}, function(target) {
-                    reset();
-                });
+                editBound.hide();
+                form.show().find("input:first").val(editBound.find("a:first").text()).focus();
+            });
+        }).focusout(function(e) {
+            smodules.ui.hasClass(e, editTitle, function(target) {
+                $(target).parent().hide();
+                $(target).parent().next().show();
             });
         }).submit(function(e) {
             smodules.ui.hasClass(e, menu, function(target) {
-                e.preventDefault();
-                chrome.bookmarks.update(id, {
-                    title: $(target).find("input.title").val()
-                }, function(bookmarkTreeNode) {
-                    $(editBound).find("a:first").text(bookmarkTreeNode.title);
-                    reset();
+                var bookmark = {
+                    id:    $(target).parent().attr("id").replace("bookmark-", ""),
+                    title: $(target).find("input:first").val()
+                };
+
+                tbm.main.sendRequest("/bookmark/item/update", { bookmark: bookmark }, function(response) {
+                    $(target).hide().next().show().find("a:first").text(response.data.title);
                 });
+
+                e.preventDefault();
             });
         }).mouseover(function(e) {
             smodules.ui.hasClass(e, button, function(target) {

@@ -27,7 +27,8 @@ grunt.initConfig({
                 "js/tbm/HEAD.js",
                 "js/tbm/util.js",
                 "js/tbm/setting.js",
-                "js/tbm/background.js"
+                "js/tbm/background.HEAD.js",
+                "js/tbm/background.*.js"
             ],
             dest: "js/tbm.background.js"
         },

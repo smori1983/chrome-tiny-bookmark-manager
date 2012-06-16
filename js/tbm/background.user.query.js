@@ -1,5 +1,5 @@
 /**
- * tbm.user.query
+ * tbm.background.user.query
  *
  * setStoreDays(days)
  * setRecentFetchSize(size)
@@ -9,24 +9,31 @@
  * getRecent()
  * getFrequent()
  */
-tbm.user = tbm.user || {};
-tbm.user.query = (function() {
+tbm.background.user.query = (function() {
     var that = {},
         key  = "user.query",
+
+        timestamp = null,
         data = null,
 
         storeDays         = 28,
         recentFetchSize   = 20,
         frequentFetchSize = 20;
 
+    var time = function() {
+        timestamp = new Date().getTime();
+    };
+
     var load = function() {
         if (data === null) {
             data = smodules.storage.getJSON(key, []);
+            time();
         }
     };
 
     var save = function() {
         smodules.storage.setJSON(key, data);
+        time();
     };
 
     var clean = function() {
@@ -36,6 +43,8 @@ tbm.user.query = (function() {
             date.pop();
         }
     };
+
+    load();
 
     that.setStoreDays = function(days) {
         if (typeof days === "number") {
@@ -59,7 +68,6 @@ tbm.user.query = (function() {
     };
 
     that.add = function(query) {
-        load();
         data.unshift({
             date:  new Date().format("%Y-%m-%d"),
             query: query
@@ -68,20 +76,21 @@ tbm.user.query = (function() {
         save();
     };
 
+    that.getTimestamp = function() {
+        return timestamp;
+    };
+
     that.getLatest = function() {
-        load();
         return data.length > 0 ? data[0].query : "";
     };
 
     that.getRecent = function() {
-        load();
         return data.slice(0, recentFetchSize);
     };
 
     that.getFrequent = function() {
         var summary, array = [];
 
-        load();
         summary = data.reduce(function(prev, current, index, array) {
             if (prev.hasOwnProperty(current.query)) {
                 prev[current.query] += 1;
