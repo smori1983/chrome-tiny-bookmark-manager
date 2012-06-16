@@ -45,3 +45,55 @@ tbm.util.i18n = (function() {
         });
     };
 })();
+
+/**
+ * @param array array array to be accessed.
+ * @param function callback function to be called for each array element.
+ * @param int interval milliseconds to wait for delay.
+ * @param int step size access in one time.
+ */
+tbm.util.delayedArrayAccess = function(spec) {
+    if (!$.isArray(spec.array) ||
+        typeof spec.callback !== "function" ||
+        typeof spec.interval !== "number" ||
+        typeof spec.step !== "number") {
+
+        return;
+    }
+
+    spec.size = spec.array.length;
+
+    var id = null;
+
+    var execute = function(start) {
+        var i = start, next = start + spec.step;
+
+        for ( ; i < next && i < spec.size; i++) {
+            spec.callback(spec.array[i]);
+        }
+
+        if (next < spec.size) {
+            id = window.setTimeout(function() {
+                execute(next);
+            }, spec.interval);
+        } else {
+            id = null;
+        }
+    };
+
+    var that = {};
+
+    that.start = function() {
+        execute(0);
+        return that;
+    };
+
+    that.stop = function() {
+        if (id) {
+            window.clearTimeout(id);
+        }
+        return that;
+    };
+
+    return that;
+};
