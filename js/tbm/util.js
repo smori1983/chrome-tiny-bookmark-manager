@@ -48,9 +48,10 @@ tbm.util.i18n = (function() {
 
 /**
  * @param array array array to be accessed.
- * @param function callback function to be called for each array element.
+ * @param function callback function to be called for each array element or elements.
  * @param int interval milliseconds to wait for delay.
  * @param int step size access in one time.
+ * @param bool together when true argument of callback function is an array of elements.
  */
 tbm.util.delayedArrayAccess = function(spec) {
     if (!$.isArray(spec.array) ||
@@ -66,10 +67,14 @@ tbm.util.delayedArrayAccess = function(spec) {
     var id = null;
 
     var execute = function(start) {
-        var i = start, next = start + spec.step;
+        var i, next = start + spec.step;
 
-        for ( ; i < next && i < spec.size; i++) {
-            spec.callback(spec.array[i]);
+        if (spec.together) {
+            spec.callback(spec.array.slice(start, next));
+        } else {
+            for (i = start; i < next && i < spec.size; i++) {
+                spec.callback(spec.array[i]);
+            }
         }
 
         if (next < spec.size) {
