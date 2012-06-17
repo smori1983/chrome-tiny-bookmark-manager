@@ -134,13 +134,10 @@ $(function() {
     // restore last query
     if (tbm.setting.get("latest_query") === "yes") {
         window.setTimeout(function() {
-            var latest = tbm.user.query.getLatest();
-
-            if (latest !== "") {
-                isManualSubmit = false;
-                $(searchQuery).val(latest);
+            tbm.main.sendRequest("/user/query/latest", {}, function(response) {
+                $(searchQuery).val(response.data);
                 $(searchForm).submit();
-            }
+            });
         }, 600);
     }
 
