@@ -32,4 +32,4 @@ A word like '[foo]' in search query is treated as a name of folder or tag.
 
 ## LICENSE
 
-MIT or GPL-2.0
+MIT

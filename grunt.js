@@ -9,7 +9,7 @@ grunt.initConfig({
                 " * smorijp.info <%= locales.meta_name.message %> v<%= pkg.version %>\n" +
                 " *\n" +
                 " * Copyright (c) <%= grunt.template.today('yyyy') %> smori <smori1983@gmail.com>\n" +
-                " * Dual licensed under the MIT or GPL-2.0 licenses.\n" +
+                " * Licensed under the MIT license.\n" +
                 " *\n" +
                 " * Date <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>\n" +
                 " */"
