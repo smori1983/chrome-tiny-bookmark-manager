@@ -3,33 +3,10 @@ $(function() {
     var details = chrome.app.getDetails(),
         locale  = window.navigator.language === "ja" ? "ja" : "en";
 
-    locale = "ja";
-    // i18n
-    $.ajax({
-        url: chrome.extension.getURL("/_locales/%s/messages.json".format(locale)),
-        dataType: "json",
-        success: function(response) {
-            var target, matched, i18n = chrome.i18n.getMessage;
-
-            $("#logo").text(i18n("meta_name"));
-            $.each(response, function(key, value) {
-                if ((matched = key.match(/^options_(tag|id|class)_([0-9a-zA-Z_]+)$/))) {
-                    if (matched[1] === "tag") {
-                        target = matched[2];
-                    } else if (matched[1] === "id") {
-                        target = "#" + matched[2].replace(/_/g, "-");
-                    } else if (matched[1] === "class") {
-                        target = "." + matched[2].replace(/_/g, "-");
-                    }
-                    //$(target).text(i18n(key));
-                    $(target).html(tbm.util.tag(value.message.escapeHTML()));
-                }
-            });
-        }
-    });
+    tbm.util.i18n(locale, "options");
 
     (function() {
-        $("#latest_query-" + tbm.setting.get("latest_query")).click();
+        $("input[name=latest_query][value=%s]".format(tbm.setting.get("latest_query"))).click();
         $("#query_store_days").attr({ value: tbm.setting.get("query_store_days") });
     })();
 
@@ -44,11 +21,8 @@ $(function() {
             value = $(target).attr("value");
         }
 
-        tbm.setting.set(name, value);
+        if (value) {
+            tbm.setting.set(name, value);
+        }
     });
-
-
-
-
-
 });
