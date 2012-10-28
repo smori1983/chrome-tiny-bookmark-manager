@@ -40,7 +40,7 @@ tbm.background.user.query = (function() {
         var date = new Date().add({ day: -storeDays }).format("%Y-%m-%d");
 
         while (data && data.length > 0 && data[data.length - 1].date < date) {
-            date.pop();
+            data.pop();
         }
     };
 
