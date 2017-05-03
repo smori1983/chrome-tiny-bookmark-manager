@@ -5,16 +5,20 @@
   "main": "grunt.js",
   "dependencies": {},
   "devDependencies": {
+    "cross-env": "^4.0.0",
+    "dotenv": "*",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "sprintf-js": "^1.0.3"
   },
   "scripts": {
-    "build": "grunt",
+    "build:prod": "cross-env EXTENSION_MODE=production grunt",
+    "build:dev": "cross-env EXTENSION_MODE=development grunt",
     "watch": "grunt watch"
   },
   "repository": {

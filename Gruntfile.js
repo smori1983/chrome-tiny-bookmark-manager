@@ -1,9 +1,29 @@
+require("dotenv").config();
+
+var sprintf = require("sprintf-js").sprintf;
+
 module.exports = function(grunt) {
+
+var forProduction = (function() {
+    var mode = process.env.EXTENSION_MODE || "development";
+
+    return mode === "production";
+})();
+
+var dist = (function() {
+    var baseDir = process.env.EXTENSION_DIST || "dist";
+
+    if (forProduction) {
+        return sprintf("%s/<%%= pkg.name %%>-v<%%= pkg.version %%>", baseDir);
+    } else {
+        return sprintf("%s/<%%= pkg.name %%>-dev", baseDir);
+    }
+})();
 
 // Project configuration.
 grunt.initConfig({
-    dist: "dist",
-    pkg: grunt.file.readJSON('package.json'),
+    dist: dist,
+    pkg: grunt.file.readJSON("package.json"),
     locales: grunt.file.readJSON("src/_locales/ja/messages.json"),
     meta: {
         banner: "/*!\n" +
@@ -149,11 +169,11 @@ grunt.initConfig({
     }
 });
 
-grunt.loadNpmTasks('grunt-contrib-clean');
-grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-contrib-copy');
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks("grunt-contrib-clean");
+grunt.loadNpmTasks("grunt-contrib-concat");
+grunt.loadNpmTasks("grunt-contrib-copy");
+grunt.loadNpmTasks("grunt-contrib-jshint");
+grunt.loadNpmTasks("grunt-contrib-watch");
 
 grunt.registerTask("default", ["jshint", "clean", "copy", "concat"]);
 
