@@ -1,11 +1,11 @@
 {
   "name": "chrome-tiny-bookmark-manager",
-  "version": "0.4.1",
-  "description": "## ABOUT",
+  "version": "0.4.2",
+  "description": "Supports bookmark search.",
   "main": "grunt.js",
   "dependencies": {},
   "devDependencies": {
-    "cross-env": "^4.0.0",
+    "cross-env": "*",
     "dotenv": "*",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
@@ -14,7 +14,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-watch": "^1.0.0",
-    "sprintf-js": "^1.0.3"
+    "sprintf-js": "*"
   },
   "scripts": {
     "build:prod": "cross-env EXTENSION_MODE=production grunt",
@@ -25,7 +25,10 @@
     "type": "git",
     "url": "git+https://github.com/smori1983/chrome-tiny-bookmark-manager.git"
   },
-  "author": "",
+  "author": {
+    "name": "smori",
+    "email": "shinichiro.mori.1983@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/smori1983/chrome-tiny-bookmark-manager/issues"

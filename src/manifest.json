@@ -1,12 +1,12 @@
 {
     "manifest_version": 2,
 
-    "name": "smorijp.info __MSG_meta_name__",
-    "version": "0.4.1",
+    "name": "__MSG_meta_name__",
+    "version": "0.4.2",
     "description": "__MSG_meta_description__",
     "author": {
         "name": "smori",
-        "email": "smori1983@gmail.com"
+        "email": "shinichiro.mori.1983@gmail.com"
     },
 
     "icons": {

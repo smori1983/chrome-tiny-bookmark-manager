@@ -20,7 +20,6 @@ var dist = (function() {
     }
 })();
 
-// Project configuration.
 grunt.initConfig({
     dist: dist,
     pkg: grunt.file.readJSON("package.json"),
