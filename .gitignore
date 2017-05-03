@@ -1,3 +1,4 @@
 *.swp
-js/main.*
-js/tbm.*
+/js/main.*
+/js/tbm.*
+/node_modules

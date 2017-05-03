@@ -1,0 +1,23 @@
+{
+  "name": "chrome-tiny-bookmark-manager",
+  "version": "0.4.1",
+  "description": "## ABOUT",
+  "main": "grunt.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.3.17"
+  },
+  "scripts": {
+    "build": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smori1983/chrome-tiny-bookmark-manager.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smori1983/chrome-tiny-bookmark-manager/issues"
+  },
+  "homepage": "https://github.com/smori1983/chrome-tiny-bookmark-manager#readme"
+}
