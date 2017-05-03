@@ -2,3 +2,4 @@
 /js/main.*
 /js/tbm.*
 /node_modules
+/npm-debug.log

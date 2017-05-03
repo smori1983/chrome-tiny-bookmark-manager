@@ -2,28 +2,27 @@ module.exports = function(grunt) {
 
 // Project configuration.
 grunt.initConfig({
-    pkg: "<json:manifest.json>",
-    locales: "<json:_locales/ja/messages.json>",
+    pkg: grunt.file.readJSON('package.json'),
+    locales: grunt.file.readJSON("_locales/ja/messages.json"),
     meta: {
         banner: "/*!\n" +
-                " * smorijp.info <%= locales.meta_name.message %> v<%= pkg.version %>\n" +
+                " * <%= locales.meta_name.message %> v<%= pkg.version %>\n" +
                 " *\n" +
                 " * Copyright (c) <%= grunt.template.today('yyyy') %> smori <smori1983@gmail.com>\n" +
                 " * Licensed under the MIT license.\n" +
                 " *\n" +
                 " * Date <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>\n" +
-                " */"
-    },
-    lint: {
-        all: ["grunt.js", "js/tbm/*.js"]
+                " */\n"
     },
     qunit: {
         files: []
     },
     concat: {
         tbmBackground: {
+            options: {
+                banner: "<%= meta.banner %>"
+            },
             src: [
-                "<banner:meta.banner>",
                 "js/tbm/HEAD.js",
                 "js/tbm/util.js",
                 "js/tbm/setting.js",
@@ -33,8 +32,10 @@ grunt.initConfig({
             dest: "js/tbm.background.js"
         },
         tbmFront: {
+            options: {
+                banner: "<%= meta.banner %>"
+            },
             src: [
-                "<banner:meta.banner>",
                 "js/tbm/HEAD.js",
                 "js/tbm/util.js",
                 "js/tbm/setting.js",
@@ -44,22 +45,28 @@ grunt.initConfig({
             dest: "js/tbm.front.js"
         },
         mainBackground: {
+            options: {
+                banner: "<%= meta.banner %>"
+            },
             src: [
-                "<banner:meta.banner>",
                 "js/main/background.js"
             ],
             dest: "js/main.background.js"
         },
         mainOptions: {
+            options: {
+                banner: "<%= meta.banner %>"
+            },
             src: [
-                "<banner:meta.banner>",
                 "js/main/options.js"
             ],
             dest: "js/main.options.js"
         },
         mainPopup: {
+            options: {
+                banner: "<%= meta.banner %>"
+            },
             src: [
-                "<banner:meta.banner>",
                 "js/main/front.js",
                 "js/main/popup.js"
             ],
@@ -68,22 +75,31 @@ grunt.initConfig({
     },
     jshint: {
         options: {
+            force: true,
             browser: true,
             curly: true,
             eqeqeq: true,
             forin: true
-        }
+        },
+        all: [
+            "Gruntfile.js",
+            "js/main/*.js",
+            "js/tbm/*.js"
+        ]
     },
     watch: {
         files: [
             "js/tbm/*.js",
-            "js/main/*.js",
-            "test/*.js"
+            "js/main/*.js"
         ],
-        tasks: "lint concat"
+        tasks: ["jshint", "concat"]
     }
 });
 
-grunt.registerTask("default", "lint concat");
+grunt.loadNpmTasks('grunt-contrib-concat');
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-contrib-watch');
+
+grunt.registerTask("default", ["jshint", "concat"]);
 
 };

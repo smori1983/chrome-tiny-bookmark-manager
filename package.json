@@ -5,10 +5,15 @@
   "main": "grunt.js",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "^0.3.17"
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0"
   },
   "scripts": {
-    "build": "grunt"
+    "build": "grunt",
+    "watch": "grunt watch"
   },
   "repository": {
     "type": "git",
