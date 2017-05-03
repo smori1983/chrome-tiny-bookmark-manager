@@ -1,4 +1,5 @@
 *.swp
+/dist
 /js/main.*
 /js/tbm.*
 /node_modules

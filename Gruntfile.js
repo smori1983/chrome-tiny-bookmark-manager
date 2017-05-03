@@ -2,13 +2,14 @@ module.exports = function(grunt) {
 
 // Project configuration.
 grunt.initConfig({
+    dist: "dist",
     pkg: grunt.file.readJSON('package.json'),
-    locales: grunt.file.readJSON("_locales/ja/messages.json"),
+    locales: grunt.file.readJSON("src/_locales/ja/messages.json"),
     meta: {
         banner: "/*!\n" +
                 " * <%= locales.meta_name.message %> v<%= pkg.version %>\n" +
                 " *\n" +
-                " * Copyright (c) <%= grunt.template.today('yyyy') %> smori <smori1983@gmail.com>\n" +
+                " * Copyright (c) <%= grunt.template.today('yyyy') %> smori <shinichiro.mori.1983@gmail.com>\n" +
                 " * Licensed under the MIT license.\n" +
                 " *\n" +
                 " * Date <%= grunt.template.today('yyyy-mm-dd HH:MM:ss') %>\n" +
@@ -17,60 +18,112 @@ grunt.initConfig({
     qunit: {
         files: []
     },
+    clean: {
+        options: {
+            force: true
+        },
+        dist: [
+            "<%= dist %>"
+        ]
+    },
+    copy: {
+        manifest: {
+            expand: true,
+            cwd: "src",
+            src: "manifest.json",
+            dest: "<%= dist %>/"
+        },
+        locales: {
+            expand: true,
+            cwd: "src",
+            src: "_locales/**/*",
+            dest: "<%= dist %>/"
+        },
+        html: {
+            expand: true,
+            cwd: "src",
+            src: "html/**/*.html",
+            dest: "<%= dist %>/"
+        },
+        template: {
+            expand: true,
+            cwd: "src",
+            src: "template/**/*.html",
+            dest: "<%= dist %>/"
+        },
+        js: {
+            expand: true,
+            cwd: "src",
+            src: "js/lib/**/*",
+            dest: "<%= dist %>/"
+        },
+        css: {
+            expand: true,
+            cwd: "src",
+            src: "css/**/*.css",
+            dest: "<%= dist %>/"
+        },
+        image: {
+            expand: true,
+            cwd: "src",
+            src: "image/**/*.png",
+            dest: "<%= dist %>/"
+        }
+    },
     concat: {
         tbmBackground: {
             options: {
                 banner: "<%= meta.banner %>"
             },
             src: [
-                "js/tbm/HEAD.js",
-                "js/tbm/util.js",
-                "js/tbm/setting.js",
-                "js/tbm/background.HEAD.js",
-                "js/tbm/background.*.js"
+                "src/js/tbm/HEAD.js",
+                "src/js/tbm/util.js",
+                "src/js/tbm/setting.js",
+                "src/js/tbm/background.HEAD.js",
+                "src/js/tbm/background.*.js"
             ],
-            dest: "js/tbm.background.js"
+            dest: "<%= dist %>/js/tbm.background.js"
         },
         tbmFront: {
             options: {
                 banner: "<%= meta.banner %>"
             },
             src: [
-                "js/tbm/HEAD.js",
-                "js/tbm/util.js",
-                "js/tbm/setting.js",
-                "js/tbm/user.*.js",
-                "js/tbm/bookmark.*.js"
+                "src/js/tbm/HEAD.js",
+                "src/js/tbm/util.js",
+                "src/js/tbm/setting.js",
+                "src/js/tbm/user.*.js",
+                "src/js/tbm/bookmark.*.js"
             ],
-            dest: "js/tbm.front.js"
+            dest: "<%= dist %>/js/tbm.front.js"
         },
         mainBackground: {
             options: {
                 banner: "<%= meta.banner %>"
             },
             src: [
-                "js/main/background.js"
+                "src/js/main/background.js"
             ],
-            dest: "js/main.background.js"
+            dest: "<%= dist %>/js/main.background.js"
         },
         mainOptions: {
             options: {
                 banner: "<%= meta.banner %>"
             },
             src: [
-                "js/main/options.js"
+                "src/js/main/options.js"
             ],
-            dest: "js/main.options.js"
+            dest: "<%= dist %>/js/main.options.js"
         },
         mainPopup: {
             options: {
                 banner: "<%= meta.banner %>"
             },
             src: [
-                "js/main/front.js",
-                "js/main/popup.js"
+                "src/js/main/front.js",
+                "src/js/main/popup.js"
             ],
-            dest: "js/main.popup.js"
+            dest: "<%= dist %>/js/main.popup.js"
         }
     },
     jshint: {
@@ -83,23 +136,25 @@ grunt.initConfig({
         },
         all: [
             "Gruntfile.js",
-            "js/main/*.js",
-            "js/tbm/*.js"
+            "src/js/main/*.js",
+            "src/js/tbm/*.js"
         ]
     },
     watch: {
         files: [
-            "js/tbm/*.js",
-            "js/main/*.js"
+            "src/js/tbm/*.js",
+            "src/js/main/*.js"
         ],
-        tasks: ["jshint", "concat"]
+        tasks: ["jshint"]
     }
 });
 
+grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-contrib-concat');
+grunt.loadNpmTasks('grunt-contrib-copy');
 grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks('grunt-contrib-watch');
 
-grunt.registerTask("default", ["jshint", "concat"]);
+grunt.registerTask("default", ["jshint", "clean", "copy", "concat"]);
 
 };
