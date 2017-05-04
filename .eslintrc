@@ -1,0 +1,19 @@
+{
+    "extends": "eslint:recommended",
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "chrome": true,
+        "localStorage": true,
+        "$": true,
+        "QUnit": true,
+        "smodules": true,
+        "tbm": true
+    },
+    "rules": {
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "eqeqeq": "error",
+        "quotes": ["error", "single"]
+    }
+}
