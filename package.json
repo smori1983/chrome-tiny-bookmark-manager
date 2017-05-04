@@ -1,6 +1,6 @@
 {
   "name": "chrome-tiny-bookmark-manager",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Supports bookmark search.",
   "main": "grunt.js",
   "dependencies": {},

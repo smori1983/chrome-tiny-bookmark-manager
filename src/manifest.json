@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "__MSG_meta_name__",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "description": "__MSG_meta_description__",
     "author": {
         "name": "smori",
