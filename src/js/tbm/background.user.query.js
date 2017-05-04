@@ -11,7 +11,7 @@
  */
 tbm.background.user.query = (function() {
     var that = {},
-        key  = "user.query",
+        key  = 'user.query',
 
         timestamp = null,
         data = null,
@@ -37,7 +37,7 @@ tbm.background.user.query = (function() {
     };
 
     var clean = function() {
-        var date = new Date().add({ day: -storeDays }).format("%Y-%m-%d");
+        var date = new Date().add({ day: -storeDays }).format('%Y-%m-%d');
 
         while (data && data.length > 0 && data[data.length - 1].date < date) {
             data.pop();
@@ -47,21 +47,21 @@ tbm.background.user.query = (function() {
     load();
 
     that.setStoreDays = function(days) {
-        if (typeof days === "number") {
+        if (typeof days === 'number') {
             storeDays = parseInt(days, 10);
         }
         return that;
     };
 
     that.setRecentFetchSize = function(size) {
-        if (typeof size === "number") {
+        if (typeof size === 'number') {
             recentFetchSize = parseInt(size, 10);
         }
         return that;
     };
 
     that.setFrequentFetchSize = function(size) {
-        if (typeof size === "number") {
+        if (typeof size === 'number') {
             frequentFetchSize = parseInt(size, 10);
         }
         return that;
@@ -69,7 +69,7 @@ tbm.background.user.query = (function() {
 
     that.add = function(query) {
         data.unshift({
-            date:  new Date().format("%Y-%m-%d"),
+            date:  new Date().format('%Y-%m-%d'),
             query: query
         });
         clean();
@@ -81,7 +81,7 @@ tbm.background.user.query = (function() {
     };
 
     that.getLatest = function() {
-        return data.length > 0 ? data[0].query : "";
+        return data.length > 0 ? data[0].query : '';
     };
 
     that.getRecent = function() {

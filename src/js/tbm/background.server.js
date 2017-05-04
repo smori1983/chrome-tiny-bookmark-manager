@@ -10,10 +10,10 @@ tbm.background.server = (function() {
             try {
                 list[path](data, callback);
             } catch (e) {
-                callback({ message: e.message + " for " + path });
+                callback({ message: e.message + ' for ' + path });
             }
         } else {
-            callback({ message: "path not found." });
+            callback({ message: 'path not found.' });
         }
     });
 

@@ -2,13 +2,13 @@ tbm.util = tbm.util || {};
 
 tbm.util.tag = (function() {
     var regex = /\{\{([a-z]+):(.+?)\}\}/g,
-        tags  = "code|strong";
+        tags  = 'code|strong';
 
     // {{tag:content}} -> <tag>content</tag>
     return function(value) {
         return value.toString().replace(regex, function(matched, tag, content) {
             if (tags.indexOf(tag) >= 0) {
-                return "<%s>%s</%s>".format(tag, content, tag);
+                return '<%s>%s</%s>'.format(tag, content, tag);
             } else {
                 return matched;
             }
@@ -18,14 +18,14 @@ tbm.util.tag = (function() {
 
 tbm.util.i18n = (function() {
     var getRegex = function(prefix) {
-        return new RegExp("^%s_(tag|id|class)_([0-9a-zA-Z_]+)$".format(prefix));
+        return new RegExp('^%s_(tag|id|class)_([0-9a-zA-Z_]+)$'.format(prefix));
     };
 
     var getTarget = function(matched) {
         switch (matched[1]) {
-            case "tag":   return matched[2];
-            case "id":    return "#" + matched[2].replace(/_/g, "-");
-            case "class": return "." + matched[2].replace(/_/g, "-");
+            case 'tag':   return matched[2];
+            case 'id':    return '#' + matched[2].replace(/_/g, '-');
+            case 'class': return '.' + matched[2].replace(/_/g, '-');
         }
     };
 
@@ -33,8 +33,8 @@ tbm.util.i18n = (function() {
         var matched, regex = getRegex(prefix);
 
         $.ajax({
-            url: chrome.extension.getURL("/_locales/%s/messages.json".format(locale)),
-            dataType: "json",
+            url: chrome.extension.getURL('/_locales/%s/messages.json'.format(locale)),
+            dataType: 'json',
             success: function(response) {
                 $.each(response, function(key, value) {
                     if ((matched = key.match(regex))) {
@@ -55,9 +55,9 @@ tbm.util.i18n = (function() {
  */
 tbm.util.delayedArrayAccess = function(spec) {
     if (!$.isArray(spec.array) ||
-        typeof spec.callback !== "function" ||
-        typeof spec.interval !== "number" ||
-        typeof spec.step !== "number") {
+        typeof spec.callback !== 'function' ||
+        typeof spec.interval !== 'number' ||
+        typeof spec.step !== 'number') {
 
         return;
     }
