@@ -1,7 +1,6 @@
 $(function() {
 
-    var details = chrome.app.getDetails(),
-        locale  = window.navigator.language === 'ja' ? 'ja' : 'en';
+    var locale  = window.navigator.language === 'ja' ? 'ja' : 'en';
 
     tbm.util.i18n(locale, 'options');
 

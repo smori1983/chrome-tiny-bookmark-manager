@@ -55,9 +55,7 @@ tbm.background.bookmarkData = (function() {
             eventCount = 0;
 
         var execute = function() {
-            var options = { silent: true },
-
-                tmpBookmarks = [],
+            var tmpBookmarks = [],
                 tmpFolders   = [],
                 tmpTags      = [],
 

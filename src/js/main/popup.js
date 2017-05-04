@@ -5,7 +5,6 @@ $(function() {
         searchMsg    = '#search-msg',
 
         details = chrome.app.getDetails(),
-        i18n    = chrome.i18n.getMessage,
         locale  = window.navigator.language === 'ja' ? 'ja' : 'en',
 
         query = '',
@@ -186,8 +185,7 @@ $(function() {
     (function() {
         var button    = 'edit-button',
             menu      = 'bookmark-edit',
-            editTitle = 'bookmark-edit-title',
-            template  = '/template/bookmark-edit.html';
+            editTitle = 'bookmark-edit-title';
 
         $('body').click(function(e) {
             smodules.ui.hasClass(e, button, function(target) {
