@@ -8,7 +8,7 @@
  */
 tbm.background.user.favoriteQuery = (function() {
     var that = {},
-        key  = "user.favorite",
+        key  = 'user.favorite',
 
         timestamp = null,
         data = null;

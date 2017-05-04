@@ -16,7 +16,7 @@ tbm.background.bookmarkData = (function() {
 
     var searchRecursive = function(bookmarkTreeNode, folders, callback) {
         $.each(bookmarkTreeNode.children, function(idx, childNode) {
-            if (childNode.hasOwnProperty("url")) {
+            if (childNode.hasOwnProperty('url')) {
                 callback(childNode, folders);
             } else {
                 folders.push(childNode.title);
@@ -28,8 +28,8 @@ tbm.background.bookmarkData = (function() {
 
     var getFullTitle = function(node, folders) {
         return folders.slice(1).map(function(value, index, array) {
-            return "[" + value + "]";
-        }).join("") + node.title;
+            return '[' + value + ']';
+        }).join('') + node.title;
     };
 
     var getTags = function(title) {
@@ -55,29 +55,27 @@ tbm.background.bookmarkData = (function() {
             eventCount = 0;
 
         var execute = function() {
-            var options = { silent: true },
-
-                tmpBookmarks = [],
+            var tmpBookmarks = [],
                 tmpFolders   = [],
                 tmpTags      = [],
 
-                timeLabel = "tbm.background.bookmarkData - bookmark scan";
+                timeLabel = 'tbm.background.bookmarkData - bookmark scan';
 
             smodules.util.console.time(timeLabel);
             chrome.bookmarks.getTree(function(rootNodes) {
                 rootNodes.forEach(function(rootNode) {
                     searchRecursive(rootNode, [], function(node, folders) {
                         node.fullTitle = getFullTitle(node, folders);
-                        node.folders   = folders.join(" / ");
+                        node.folders   = folders.join(' / ');
                         tmpBookmarks.push(node);
 
                         folders.slice(1).forEach(function(folder) {
-                            if (notIn(folder, tmpFolders, "name")) {
+                            if (notIn(folder, tmpFolders, 'name')) {
                                 tmpFolders.push({ name: folder });
                             }
                         });
                         getTags(node.title).forEach(function(tag) {
-                            if (notIn(tag, tmpTags, "name")) {
+                            if (notIn(tag, tmpTags, 'name')) {
                                 tmpTags.push({ name: tag });
                             }
                         });
@@ -107,7 +105,7 @@ tbm.background.bookmarkData = (function() {
         };
 
         return function(isRecursive) {
-            var logMsg = "tbm.background.bookmarkData - execute() %s - eventCount = %d";
+            var logMsg = 'tbm.background.bookmarkData - execute() %s - eventCount = %d';
 
             if (!importing) {
                 eventCount += isRecursive ? 0 : 1;
@@ -116,10 +114,10 @@ tbm.background.bookmarkData = (function() {
                     inProgress = true;
                     window.setTimeout(function() {
                         if (eventCount <= 1) {
-                            smodules.util.console.log(logMsg.format("called", eventCount));
+                            smodules.util.console.log(logMsg.format('called', eventCount));
                             execute();
                         } else {
-                            smodules.util.console.log(logMsg.format("not called", eventCount));
+                            smodules.util.console.log(logMsg.format('not called', eventCount));
                             inProgress = false;
                             eventCount = Math.floor(eventCount / 2);
                             update(true);
@@ -154,8 +152,8 @@ tbm.background.bookmarkData = (function() {
 
 
     var setupRegex = function(query) {
-        return query.trim().replace(/\s+/g, " ").split(" ").map(function(value, index, array) {
-            return new RegExp(value.regexQuote(), "i");
+        return query.trim().replace(/\s+/g, ' ').split(' ').map(function(value, index, array) {
+            return new RegExp(value.regexQuote(), 'i');
         });
     };
 
@@ -179,7 +177,7 @@ tbm.background.bookmarkData = (function() {
     };
 
     that.getBookmarks = function(query) {
-        return typeof query === "string" ? search(query) : _bookmarks;
+        return typeof query === 'string' ? search(query) : _bookmarks;
     };
 
     that.getFolders = function() {
@@ -192,7 +190,7 @@ tbm.background.bookmarkData = (function() {
 
     that.itemUpdate = function(bookmark, callback) {
         chrome.bookmarks.update(bookmark.id, {
-            title: bookmark.title
+            title: bookmark.title,
         }, function(bookmarkTreeNode) {
             callback(bookmarkTreeNode);
         });
