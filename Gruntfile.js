@@ -85,7 +85,10 @@ grunt.initConfig({
         image: {
             expand: true,
             cwd: "src",
-            src: "image/**/*.png",
+            src: [
+                "image/**/*.gif",
+                "image/**/*.png"
+            ],
             dest: "<%= dist %>/"
         }
     },
