@@ -70,7 +70,7 @@ tbm.background.user.query = (function() {
     that.add = function(query) {
         data.unshift({
             date:  new Date().format('%Y-%m-%d'),
-            query: query
+            query: query,
         });
         clean();
         save();
@@ -103,7 +103,7 @@ tbm.background.user.query = (function() {
         $.each(summary, function(query, count) {
             array.push({
                 query: query,
-                count: count
+                count: count,
             });
         });
         array.sort(function(a, b) {

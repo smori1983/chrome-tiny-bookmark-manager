@@ -190,7 +190,7 @@ tbm.background.bookmarkData = (function() {
 
     that.itemUpdate = function(bookmark, callback) {
         chrome.bookmarks.update(bookmark.id, {
-            title: bookmark.title
+            title: bookmark.title,
         }, function(bookmarkTreeNode) {
             callback(bookmarkTreeNode);
         });

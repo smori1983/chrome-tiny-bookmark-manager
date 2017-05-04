@@ -41,7 +41,7 @@ tbm.util.i18n = (function() {
                         $(getTarget(matched)).html(tbm.util.tag(value.message.escapeHTML()));
                     }
                 });
-            }
+            },
         });
     };
 })();

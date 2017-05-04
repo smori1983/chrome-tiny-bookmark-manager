@@ -12,6 +12,13 @@
         "tbm": true
     },
     "rules": {
+        "array-bracket-spacing": ["error", "never"],
+        "brace-style": ["error", "1tbs"],
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "functions": "never"
+        }],
         "no-console": ["error", {
             "allow": ["warn", "error"]
         }],

@@ -17,7 +17,7 @@ tbm.background.server.register({
         if (has(data, 'query')) {
             callback({
                 timestamp: module.getTimestamp(),
-                data:      module.getBookmarks(data.query)
+                data:      module.getBookmarks(data.query),
             });
         } else {
             exception('no data: query');
@@ -28,7 +28,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data:      module.getBookmarks(has(data, 'query') ? data.query : null)
+            data:      module.getBookmarks(has(data, 'query') ? data.query : null),
         });
     },
 
@@ -37,7 +37,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data:      module.getFolders()
+            data:      module.getFolders(),
         });
     },
 
@@ -46,7 +46,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data:      module.getTags()
+            data:      module.getTags(),
         });
     },
 
@@ -70,7 +70,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data:      module.getLatest()
+            data:      module.getLatest(),
         });
     },
 
@@ -79,7 +79,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data:      module.getRecent()
+            data:      module.getRecent(),
         });
     },
 
@@ -88,7 +88,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data:      module.getFrequent()
+            data:      module.getFrequent(),
         });
     },
 
@@ -103,7 +103,7 @@ tbm.background.server.register({
 
         callback({
             timestamp: module.getTimestamp(),
-            data: module.getAll()
+            data: module.getAll(),
         });
     },
 
@@ -113,7 +113,7 @@ tbm.background.server.register({
         if (has(data, 'query')) {
             module.add(data.query);
             callback({
-                data: module.getAll()
+                data: module.getAll(),
             });
         } else {
             exception('no data: query');
@@ -126,7 +126,7 @@ tbm.background.server.register({
         if (has(data, 'query')) {
             module.remove(data.query);
             callback({
-                data: module.getAll()
+                data: module.getAll(),
             });
         } else {
             exception('no data: query');
@@ -138,12 +138,12 @@ tbm.background.server.register({
 
         if (has(data, 'query')) {
             callback({
-                answer: module.check(data.query)
+                answer: module.check(data.query),
             });
         } else {
             exception('no data: query');
         }
-    }
+    },
 
 }); // tbm.background.server.register()
 

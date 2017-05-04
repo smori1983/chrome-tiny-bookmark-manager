@@ -71,7 +71,7 @@ $(function() {
                         together: true,
                         callback: function(bookmarks) {
                             smodules.template(template, { bookmarks: bookmarks }).appendTo(content);
-                        }
+                        },
                     }).start();
                     tbm.main.checkFavoriteStatus(query);
                     $(favorite).show();
@@ -106,7 +106,7 @@ $(function() {
         { id: '#frequent-search-content', className: 'query', tagged: true },
         { id: '#found-folders-content',   className: 'name',  tagged: false },
         { id: '#found-tags-content',      className: 'name',  tagged: false },
-        { id: '#favorite-query-content',  className: 'query', tagged: true }
+        { id: '#favorite-query-content',  className: 'query', tagged: true },
     ]);
 
     // tab 'Folders & Tags'
@@ -204,7 +204,7 @@ $(function() {
             smodules.ui.hasClass(e, menu, function(target) {
                 var bookmark = {
                     id:    $(target).parent().attr('id').replace('bookmark-', ''),
-                    title: $(target).find('input:first').val()
+                    title: $(target).find('input:first').val(),
                 };
 
                 tbm.main.sendRequest('/bookmark/item/update', { bookmark: bookmark }, function(response) {

@@ -7,7 +7,7 @@ tbm.setting = (function() {
 
         defaults = {
             'latest_query': 'yes',
-            'query_store_days': '30'
+            'query_store_days': '30',
         };
 
     var getKey = function(key) {
