@@ -13,12 +13,23 @@
     },
     "rules": {
         "array-bracket-spacing": ["error", "never"],
+        "block-scoped-var": "error",
         "brace-style": ["error", "1tbs"],
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
             "objects": "always-multiline",
             "functions": "never"
         }],
+        "comma-spacing": ["error", {
+            "before": false,
+            "after": true
+        }],
+        "comma-style": ["error", "last"],
+        "computed-property-spacing": ["error", "never"],
+        "curly": ["error", "all"],
+        "eol-last": ["error", "always"],
+        "eqeqeq": "error",
+        "func-call-spacing": ["error", "never"],
         "no-console": ["error", {
             "allow": ["warn", "error"]
         }],
@@ -29,7 +40,6 @@
             "args": "none",
             "caughtErrors": "none"
         }],
-        "eqeqeq": "error",
         "quotes": ["error", "single"]
     }
 }
