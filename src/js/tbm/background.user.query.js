@@ -24,8 +24,8 @@ tbm.background.user.query = (function() {
         timestamp = new Date().getTime();
     };
 
-    var load = function() {
-        if (data === null) {
+    var load = function(force) {
+        if (force === true || data === null) {
             data = smodules.storage.getJSON(key, []);
             time();
         }
@@ -45,6 +45,10 @@ tbm.background.user.query = (function() {
     };
 
     load();
+
+    that.reload = function() {
+        load(true);
+    };
 
     that.setStoreDays = function(days) {
         if (typeof days === 'number') {
