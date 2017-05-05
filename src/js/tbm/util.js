@@ -1,11 +1,26 @@
 tbm.util = tbm.util || {};
 
 tbm.util.tag = (function() {
-    var regex = /\{\{([a-z]+):(.+?)\}\}/g,
-        tags  = 'code|strong';
+    var regex = /\{\{([a-z]+):(.+?)\}\}/g;
+    var tags = 'code|strong';
 
-    // {{tag:content}} -> <tag>content</tag>
+    /**
+     * Converts input to html tag formatted string.
+     *
+     * {{tag:content}} -> <tag>content</tag>
+     *
+     * Acceptable tags:
+     * - code
+     * - strong
+     *
+     * @param string value
+     * @return string
+     */
     return function(value) {
+        if (typeof value !== 'string') {
+            return '';
+        }
+
         return value.toString().replace(regex, function(matched, tag, content) {
             if (tags.indexOf(tag) >= 0) {
                 return '<%s>%s</%s>'.format(tag, content, tag);

@@ -6,6 +6,14 @@ QUnit.module('tbm.util.tag', {
 });
 
 QUnit.cases.init([
+    { input: null, output: '' },
+    { input: true, output: '' },
+    { input: false, output: '' },
+    { input: 10, output: '' },
+    { input: 1.1, output: '' },
+    { input: [], output: '' },
+    { input: {}, output: '' },
+
     { input: 'hoge', output: 'hoge' },
 
     { input: '{{strong}}', output: '{{strong}}' },
