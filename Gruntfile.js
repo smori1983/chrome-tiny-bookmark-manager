@@ -160,7 +160,8 @@ grunt.initConfig({
         all: [
             "Gruntfile.js",
             "src/js/main/*.js",
-            "src/js/tbm/*.js"
+            "src/js/tbm/*.js",
+            "test/**/*.js"
         ]
     },
     watch: {
