@@ -14,6 +14,7 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-qunit": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "sprintf-js": "*"
   },
@@ -22,6 +23,7 @@
     "build:dev": "cross-env EXTENSION_MODE=development grunt",
     "lint": "eslint -c .eslintrc src/js/main src/js/tbm; exit 0;",
     "lint:fix": "eslint -c .eslintrc --fix src/js/main src/js/tbm; exit 0;",
+    "test": "grunt qunit",
     "watch": "grunt watch"
   },
   "repository": {

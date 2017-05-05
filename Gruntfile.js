@@ -35,7 +35,8 @@ grunt.initConfig({
                 " */\n"
     },
     qunit: {
-        files: []
+        options: {},
+        all: ["test/**/*.html"]
     },
     clean: {
         options: {
@@ -165,9 +166,11 @@ grunt.initConfig({
     watch: {
         files: [
             "src/js/tbm/*.js",
-            "src/js/main/*.js"
+            "src/js/main/*.js",
+            "test/**/*.html",
+            "test/**/*.js"
         ],
-        tasks: ["jshint"]
+        tasks: ["jshint", "qunit"]
     }
 });
 
@@ -175,6 +178,7 @@ grunt.loadNpmTasks("grunt-contrib-clean");
 grunt.loadNpmTasks("grunt-contrib-concat");
 grunt.loadNpmTasks("grunt-contrib-copy");
 grunt.loadNpmTasks("grunt-contrib-jshint");
+grunt.loadNpmTasks("grunt-contrib-qunit");
 grunt.loadNpmTasks("grunt-contrib-watch");
 
 grunt.registerTask("default", ["jshint", "clean", "copy", "concat"]);
