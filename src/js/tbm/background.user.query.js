@@ -10,15 +10,15 @@
  * getFrequent()
  */
 tbm.background.user.query = (function() {
-    var that = {},
-        key  = 'user.query',
+    var that = {};
+    var key  = 'user.query';
 
-        timestamp = null,
-        data = null,
+    var timestamp = null;
+    var data = null;
 
-        storeDays         = 28,
-        recentFetchSize   = 20,
-        frequentFetchSize = 20;
+    var storeDays         = 28;
+    var recentFetchSize   = 20;
+    var frequentFetchSize = 20;
 
     var time = function() {
         timestamp = new Date().getTime();
@@ -93,23 +93,26 @@ tbm.background.user.query = (function() {
     };
 
     that.getFrequent = function() {
-        var summary, array = [];
+        var summary = {};
+        var array = [];
 
-        summary = data.reduce(function(prev, current, index, array) {
-            if (prev.hasOwnProperty(current.query)) {
-                prev[current.query] += 1;
+        data.forEach(function(item) {
+            var key = item.query;
+
+            if (summary.hasOwnProperty(key)) {
+                summary[key] += 1;
             } else {
-                prev[current.query] = 1;
+                summary[key] = 1;
             }
-            return prev;
-        }, {});
+        });
 
-        $.each(summary, function(query, count) {
+        Object.keys(summary).forEach(function(query) {
             array.push({
                 query: query,
-                count: count,
+                count: summary[query],
             });
         });
+
         array.sort(function(a, b) {
             return b.count - a.count;
         });
