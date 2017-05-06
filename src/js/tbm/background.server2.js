@@ -10,6 +10,14 @@ tbm.background.server2 = (function() {
                 data: module.getLatest(),
             };
         },
+        '/user/query/recent': function(params) {
+            var module = tbm.background.user.query;
+
+            return {
+                timestamp: module.getTimestamp(),
+                data: module.getRecent(),
+            };
+        },
     };
 
     var checkPath = function(path) {
