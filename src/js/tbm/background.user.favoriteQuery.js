@@ -7,11 +7,11 @@
  * getAll()
  */
 tbm.background.user.favoriteQuery = (function() {
-    var that = {},
-        key  = 'user.favorite',
+    var that = {};
+    var key  = 'user.favorite';
 
-        timestamp = null,
-        data = null;
+    var timestamp = null;
+    var data = null;
 
     var time = function() {
         timestamp = new Date().getTime();
