@@ -18,6 +18,14 @@ tbm.background.server2 = (function() {
                 data: module.getRecent(),
             };
         },
+        '/user/query/frequent': function(params) {
+            var module = tbm.background.user.query;
+
+            return {
+                timestamp: module.getTimestamp(),
+                data: module.getFrequent(),
+            };
+        },
     };
 
     var checkPath = function(path) {
