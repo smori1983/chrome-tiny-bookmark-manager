@@ -26,11 +26,29 @@ tbm.background.server2 = (function() {
                 data: module.getFrequent(),
             };
         },
+        '/user/query/add': function(params) {
+            var module = tbm.background.user.query;
+
+            if (params.hasOwnProperty('query')) {
+                module.add(params.query);
+            } else {
+                error('invalid params: query is required.');
+            }
+
+            return {
+                timestamp: module.getTimestamp(),
+                data: null,
+            };
+        },
+    };
+
+    var error = function(message) {
+        throw new Error(message);
     };
 
     var checkPath = function(path) {
         if (!jobs.hasOwnProperty(path)) {
-            throw new Error('path not found.');
+            error('path not found.');
         }
     };
 
