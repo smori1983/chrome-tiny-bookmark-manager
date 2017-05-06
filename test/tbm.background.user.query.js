@@ -69,6 +69,26 @@ QUnit.test('getFrequent', function(assert) {
     assert.equal(frequent[1].count, 2);
 });
 
+QUnit.test('getFrequent - sort of query value', function(assert) {
+    this.SUT.setFrequentFetchSize(2);
+
+    this.SUT.add('aaa');
+    this.SUT.add('bbb');
+    this.SUT.add('ccc');
+    this.SUT.add('bbb');
+    this.SUT.add('ccc');
+    this.SUT.add('ddd');
+    this.SUT.add('ddd');
+
+    var frequent = this.SUT.getFrequent();
+
+    assert.equal(frequent.length, 2);
+    assert.equal(frequent[0].query, 'bbb');
+    assert.equal(frequent[0].count, 2);
+    assert.equal(frequent[1].query, 'ccc');
+    assert.equal(frequent[1].count, 2);
+});
+
 QUnit.test('getFrequent - with expired data', function(assert) {
     smodules.storage.setJSON('user.query', [
         { date: '2000-01-01', query: 'ccc' },

@@ -97,13 +97,11 @@ tbm.background.user.query = (function() {
         var array = [];
 
         data.forEach(function(item) {
-            var key = item.query;
+            summary[item.query] = 0;
+        });
 
-            if (summary.hasOwnProperty(key)) {
-                summary[key] += 1;
-            } else {
-                summary[key] = 1;
-            }
+        data.forEach(function(item) {
+            summary[item.query] += 1;
         });
 
         Object.keys(summary).forEach(function(query) {
@@ -114,6 +112,10 @@ tbm.background.user.query = (function() {
         });
 
         array.sort(function(a, b) {
+            if (a.count === b.count) {
+                return a.query < b.query ? -1 : 1;
+            }
+
             return b.count - a.count;
         });
 
