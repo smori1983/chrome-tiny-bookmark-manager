@@ -27,6 +27,8 @@ tbm.background.bookmarkData = (function() {
     };
 
     var getFullTitle = function(node, folders) {
+        // Because first element of folders is 'bookmark bar',
+        // skip it.
         return folders.slice(1).map(function(value, index, array) {
             return '[' + value + ']';
         }).join('') + node.title;
