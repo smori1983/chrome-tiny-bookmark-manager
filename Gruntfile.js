@@ -169,7 +169,8 @@ grunt.initConfig({
             "src/js/tbm/*.js",
             "src/js/main/*.js",
             "test/**/*.html",
-            "test/**/*.js"
+            "test/**/*.js",
+            "test_lib/**/*.js"
         ],
         tasks: ["jshint", "qunit"]
     }

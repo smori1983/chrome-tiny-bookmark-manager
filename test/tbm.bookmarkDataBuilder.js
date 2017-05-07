@@ -1,0 +1,33 @@
+QUnit.module('tbm.bookmarkDataBuilder', {
+    beforeEach: function() {
+        this.SUT = tbm.bookmarkDataBuilder;
+    },
+    afterEach: function() {
+    }
+});
+
+QUnit.test('build', function(assert) {
+    var bookmarks = [
+        { title: 'webpage_01_01', url: 'http://example.com/01_01' },
+        { title: '[t1][t2]webpage_01_02', url: 'http://example.com/01_02' },
+        { title: 'webpage_02_01', url: 'http://example.com/02_01' },
+    ];
+
+    var folders = [
+        'folder_01_01',
+        'その他のブックマーク',
+        'ブックマーク バー',
+    ];
+
+    var tags = [
+        't1',
+        't2',
+    ];
+
+    var rootNode = tbm.testLib.bookmarkTreeNode.getRootNode();
+    var data = this.SUT.build(rootNode);
+
+    assert.propEqual(data.bookmarks, bookmarks);
+    assert.propEqual(data.folders, folders);
+    assert.propEqual(data.tags, tags);
+});
