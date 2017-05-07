@@ -8,9 +8,24 @@ QUnit.module('tbm.bookmarkDataBuilder', {
 
 QUnit.test('build', function(assert) {
     var bookmarks = [
-        { title: 'webpage_01_01', url: 'http://example.com/01_01' },
-        { title: '[t1][t2]webpage_01_02', url: 'http://example.com/01_02' },
-        { title: 'webpage_02_01', url: 'http://example.com/02_01' },
+        {
+            title: 'webpage_01_01',
+            fullTitle: 'webpage_01_01',
+            url: 'http://example.com/01_01',
+            folders: ['ブックマーク バー'],
+        },
+        {
+            title: '[t2][t1]webpage_01_02',
+            fullTitle: '[folder_01_01][t2][t1]webpage_01_02',
+            url: 'http://example.com/01_02',
+            folders: ['ブックマーク バー', 'folder_01_01'],
+        },
+        {
+            title: 'webpage_02_01',
+            fullTitle: 'webpage_02_01',
+            url: 'http://example.com/02_01',
+            folders: ['その他のブックマーク'],
+        },
     ];
 
     var folders = [

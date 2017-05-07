@@ -1,20 +1,33 @@
 tbm.bookmarkDataBuilder = (function() {
     var that = {};
 
-    var walkFolder = function (result, bookmarkTreeNode) {
+    var walkFolder = function (result, bookmarkTreeNode, folderStack) {
         bookmarkTreeNode.children.forEach(function(node) {
             if (isBookmarkNode(node)) {
                 addTags(result, node.title);
-                result.bookmarks.push(node);
+                addBookmark(result, node, folderStack);
             } else {
+                folderStack.push(node.title);
                 addFolder(result, node.title);
-                walkFolder(result, node);
+                walkFolder(result, node, folderStack);
+                folderStack.pop();
             }
         });
     };
 
     var isBookmarkNode = function (bookmarkTreeNode) {
         return bookmarkTreeNode.hasOwnProperty('url');
+    };
+
+    var addBookmark = function(result, node, folderStack) {
+        var bookmark = {
+            title: node.title,
+            fullTitle: tbm.bookmarkUtil.getFullTitle(node.title, folderStack),
+            url: node.url,
+            folders: folderStack.slice(0),
+        };
+
+        result.bookmarks.push(bookmark);
     };
 
     var addFolder = function (result, folderName) {
@@ -46,9 +59,10 @@ tbm.bookmarkDataBuilder = (function() {
             tags: [],
         };
 
-        walkFolder(result, rootNode);
+        walkFolder(result, rootNode, []);
 
         result.folders.sort();
+        result.tags.sort();
 
         return result;
     };
