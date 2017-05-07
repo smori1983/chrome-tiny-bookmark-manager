@@ -40,6 +40,14 @@ tbm.background.server2 = (function() {
                 data: null,
             };
         },
+        '/user/query/favorite/list': function(params) {
+            var module = tbm.background.user.favoriteQuery;
+
+            return {
+                timestamp: module.getTimestamp(),
+                data: module.getAll(),
+            };
+        },
     };
 
     var error = function(message) {

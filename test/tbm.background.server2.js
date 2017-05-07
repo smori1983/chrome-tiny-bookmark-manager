@@ -169,3 +169,40 @@ QUnit.test('invalid params - query not sent', function(assert) {
     assert.equal(result.status, 'error');
     assert.equal(result.message, 'invalid params: query is required.');
 });
+
+QUnit.module('tbm.background.server2.user.favorite.list', {
+    beforeEach: function() {
+        this.path = '/user/query/favorite/list';
+
+        this.preset = function() {
+            tbm.background.user.favoriteQuery.add('xxx');
+            tbm.background.user.favoriteQuery.add('yyy');
+        };
+
+        this.SUT = tbm.background.server2;
+
+        localStorage.clear();
+        tbm.background.user.favoriteQuery.reload();
+    },
+    afterEach: function() {
+        localStorage.clear();
+    }
+});
+
+QUnit.test('with data', function(assert) {
+    this.preset();
+
+    var result = this.SUT.request(this.path, {});
+
+    assert.equal(result.status, 'ok');
+    assert.equal(result.response.data.length, 2);
+    assert.equal(result.response.data[0].query, 'xxx');
+    assert.equal(result.response.data[1].query, 'yyy');
+});
+
+QUnit.test('no data', function(assert) {
+    var result = this.SUT.request(this.path, {});
+
+    assert.equal(result.status, 'ok');
+    assert.propEqual(result.response.data, []);
+});
