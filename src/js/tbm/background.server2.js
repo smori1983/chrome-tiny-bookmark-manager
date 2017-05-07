@@ -48,6 +48,39 @@ tbm.background.server2 = (function() {
                 data: module.getAll(),
             };
         },
+        '/user/query/favorite/add': function(params) {
+            var module = tbm.background.user.favoriteQuery;
+
+            if (params.hasOwnProperty('query')) {
+                module.add(params.query);
+
+                return {};
+            } else {
+                error('invalid params: query is required.');
+            }
+        },
+        '/user/query/favorite/remove': function(params) {
+            var module = tbm.background.user.favoriteQuery;
+
+            if (params.hasOwnProperty('query')) {
+                module.remove(params.query);
+
+                return {};
+            } else {
+                error('invalid params: query is required.');
+            }
+        },
+        '/user/query/favorite/check': function(params) {
+            var module = tbm.background.user.favoriteQuery;
+
+            if (params.hasOwnProperty('query')) {
+                return {
+                    answer: module.check(params.query),
+                };
+            } else {
+                error('invalid params: query is required.');
+            }
+        },
     };
 
     var error = function(message) {

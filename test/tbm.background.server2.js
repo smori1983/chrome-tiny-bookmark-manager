@@ -170,9 +170,12 @@ QUnit.test('invalid params - query not sent', function(assert) {
     assert.equal(result.message, 'invalid params: query is required.');
 });
 
-QUnit.module('tbm.background.server2.user.favorite.list', {
+QUnit.module('tbm.background.server2.user.favorite', {
     beforeEach: function() {
-        this.path = '/user/query/favorite/list';
+        this.pathList = '/user/query/favorite/list';
+        this.pathAdd = '/user/query/favorite/add';
+        this.pathRemove = '/user/query/favorite/remove';
+        this.pathCheck = '/user/query/favorite/check';
 
         this.preset = function() {
             tbm.background.user.favoriteQuery.add('xxx');
@@ -189,10 +192,10 @@ QUnit.module('tbm.background.server2.user.favorite.list', {
     }
 });
 
-QUnit.test('with data', function(assert) {
+QUnit.test('list - with data', function(assert) {
     this.preset();
 
-    var result = this.SUT.request(this.path, {});
+    var result = this.SUT.request(this.pathList, {});
 
     assert.equal(result.status, 'ok');
     assert.equal(result.response.data.length, 2);
@@ -200,9 +203,58 @@ QUnit.test('with data', function(assert) {
     assert.equal(result.response.data[1].query, 'yyy');
 });
 
-QUnit.test('no data', function(assert) {
-    var result = this.SUT.request(this.path, {});
+QUnit.test('list - no data', function(assert) {
+    var result = this.SUT.request(this.pathList, {});
 
     assert.equal(result.status, 'ok');
     assert.propEqual(result.response.data, []);
+});
+
+QUnit.test('operation', function(assert) {
+    var result;
+
+    result = this.SUT.request(this.pathCheck, { query: 'zzz' });
+
+    assert.equal(result.status, 'ok');
+    assert.equal(result.response.answer, false);
+
+    result = this.SUT.request(this.pathAdd, { query: 'zzz' });
+
+    assert.equal(result.status, 'ok');
+
+    result = this.SUT.request(this.pathList, {});
+
+    assert.equal(result.status, 'ok');
+    assert.equal(result.response.data.length, 1);
+    assert.equal(result.response.data[0].query, 'zzz');
+
+    result = this.SUT.request(this.pathRemove, { query: 'zzz' });
+
+    assert.equal(result.status, 'ok');
+
+    result = this.SUT.request(this.pathList, {});
+
+    assert.equal(result.status, 'ok');
+    assert.equal(result.response.data.length, 0);
+});
+
+QUnit.test('add - invalid params - query not sent', function(assert) {
+    var result = this.SUT.request(this.pathAdd, {});
+
+    assert.equal(result.status, 'error');
+    assert.equal(result.message, 'invalid params: query is required.');
+});
+
+QUnit.test('remove - invalid params - query not sent', function(assert) {
+    var result = this.SUT.request(this.pathRemove, {});
+
+    assert.equal(result.status, 'error');
+    assert.equal(result.message, 'invalid params: query is required.');
+});
+
+QUnit.test('check - invalid params - query not sent', function(assert) {
+    var result = this.SUT.request(this.pathCheck, {});
+
+    assert.equal(result.status, 'error');
+    assert.equal(result.message, 'invalid params: query is required.');
 });
