@@ -15,8 +15,7 @@ tbm.testLib.bookmarkTreeNode = (function() {
                     {
                         title: 'folder_01_01', children: [
                             {
-                                title: '[t1][t2]webpage_01_02',
-                                url: 'http://example.com/01_02',
+                                title: '[t2][t1]webpage_01_02', url: 'http://example.com/01_02',
                             },
                         ],
                     },
