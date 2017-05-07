@@ -21,6 +21,7 @@ tbm.bookmarkDataBuilder = (function() {
 
     var addBookmark = function(result, node, folderStack) {
         var bookmark = {
+            id: node.id,
             title: node.title,
             fullTitle: tbm.bookmarkUtil.getFullTitle(node.title, folderStack),
             url: node.url,
@@ -48,23 +49,47 @@ tbm.bookmarkDataBuilder = (function() {
         }
     };
 
+    var prepareFolders = function(folders) {
+        var result = [];
+
+        folders.forEach(function(folderName) {
+            result.push({ name: folderName });
+        });
+
+        return result;
+    };
+
+    var prepareTags = function(tags) {
+        var result = [];
+
+        tags.forEach(function(tagName) {
+            result.push({ name: tagName });
+        });
+
+        return result;
+    };
+
     /**
      * @param BookmarkTreeNode rootNode
      * @return object
      */
     that.build = function(rootNode) {
-        var result = {
+        var tmp = {
             bookmarks: [],
             folders: [],
             tags: [],
         };
 
-        walkFolder(result, rootNode, []);
+        walkFolder(tmp, rootNode, []);
 
-        result.folders.sort();
-        result.tags.sort();
+        tmp.folders.sort();
+        tmp.tags.sort();
 
-        return result;
+        return {
+            bookmarks: tmp.bookmarks,
+            folders: prepareFolders(tmp.folders),
+            tags: prepareTags(tmp.tags),
+        };
     };
 
     return that;

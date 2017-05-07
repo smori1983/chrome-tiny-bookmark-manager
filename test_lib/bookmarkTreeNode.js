@@ -10,12 +10,12 @@ tbm.testLib.bookmarkTreeNode = (function() {
             {
                 title: 'ブックマーク バー', children: [
                     {
-                        title: 'webpage_01_01', url: 'http://example.com/01_01',
+                        id: 101, title: 'webpage_01_01', url: 'http://example.com/01_01',
                     },
                     {
                         title: 'folder_01_01', children: [
                             {
-                                title: '[t2][t1]webpage_01_02', url: 'http://example.com/01_02',
+                                id: 103, title: '[t2][t1]webpage_01_02', url: 'http://example.com/01_02',
                             },
                         ],
                     },
@@ -24,7 +24,7 @@ tbm.testLib.bookmarkTreeNode = (function() {
             {
                 title: 'その他のブックマーク', children: [
                     {
-                        title: 'webpage_02_01', url: 'http://example.com/02_01',
+                        id: 102, title: 'webpage_02_01', url: 'http://example.com/02_01',
                     },
                 ],
             },
