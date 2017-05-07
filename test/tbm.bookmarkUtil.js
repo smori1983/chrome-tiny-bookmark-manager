@@ -26,3 +26,18 @@ QUnit.cases.init([
 test('tags', function(params, assert) {
     assert.propEqual(this.SUT.getTags(params.input), params.output);
 });
+
+QUnit.cases.init([
+    { title: 'title', folders: ['bookmark bar'], output: 'title' },
+
+    { title: 'title', folders: ['bookmark bar', 'f1'], output: '[f1]title' },
+    { title: 'title', folders: ['bookmark bar', 'f1', 'f2'], output: '[f1][f2]title' },
+
+    { title: '[t1]title', folders: ['bookmark bar'], output: '[t1]title' },
+    { title: '[t1][t2]title', folders: ['bookmark bar'], output: '[t1][t2]title' },
+
+    { title: '[t1][t2]title', folders: ['bookmark bar', 'f1', 'f2'], output: '[f1][f2][t1][t2]title' },
+]).
+test('fullTitle', function(params, assert) {
+    assert.equal(this.SUT.getFullTitle(params.title, params.folders), params.output);
+});

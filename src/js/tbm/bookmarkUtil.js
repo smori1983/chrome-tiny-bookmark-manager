@@ -23,5 +23,20 @@ tbm.bookmarkUtil = (function() {
         return tags;
     };
 
+    /**
+     * Creates the title with folder names.
+     *
+     * @param string title
+     * @param string[] folders
+     * @return string
+     */
+    that.getFullTitle = function(title, folders) {
+        // Because first element of folders is 'bookmark bar',
+        // skip it.
+        return folders.slice(1).map(function(value) {
+            return '[' + value + ']';
+        }).join('') + title;
+    };
+
     return that;
 })();
