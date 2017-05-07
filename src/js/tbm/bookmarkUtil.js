@@ -31,8 +31,12 @@ tbm.bookmarkUtil = (function() {
      * @return string
      */
     that.getFullTitle = function(title, folders) {
-        // Because first element of folders is 'bookmark bar',
-        // skip it.
+        // The first elements of folders are one of:
+        // - bookmark bar
+        // - other bookmarks
+        // - mobile bookmarks
+        //
+        // So skip them.
         return folders.slice(1).map(function(value) {
             return '[' + value + ']';
         }).join('') + title;
