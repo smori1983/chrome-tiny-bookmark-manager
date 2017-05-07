@@ -1,4 +1,10 @@
+/**
+ * NOTE:
+ * - tbm.bookmarkUtil should be loaded previously.
+ */
 tbm.bookmarkDataBuilder = (function() {
+    var util = tbm.bookmarkUtil;
+
     var that = {};
 
     var walkFolder = function (result, bookmarkTreeNode, folderStack) {
@@ -23,7 +29,7 @@ tbm.bookmarkDataBuilder = (function() {
         var bookmark = {
             id: node.id,
             title: node.title,
-            fullTitle: tbm.bookmarkUtil.getFullTitle(node.title, folderStack),
+            fullTitle: util.getFullTitle(node.title, folderStack),
             url: node.url,
             folders: folderStack.slice(0),
         };
@@ -38,7 +44,7 @@ tbm.bookmarkDataBuilder = (function() {
     };
 
     var addTags = function (result, title) {
-        tbm.bookmarkUtil.getTags(title).forEach(function(tagName) {
+        util.getTags(title).forEach(function(tagName) {
             addTag(result, tagName);
         });
     };
