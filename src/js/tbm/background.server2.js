@@ -2,84 +2,84 @@ tbm.background.server2 = (function() {
     var that = {};
 
     var jobs = {
-        '/user/query/latest': function(params) {
+        '/user/query/latest': function(params, callback) {
             var module = tbm.background.user.query;
 
-            return {
+            callback({
                 timestamp: module.getTimestamp(),
                 data: module.getLatest(),
-            };
+            });
         },
-        '/user/query/recent': function(params) {
+        '/user/query/recent': function(params, callback) {
             var module = tbm.background.user.query;
 
-            return {
+            callback({
                 timestamp: module.getTimestamp(),
                 data: module.getRecent(),
-            };
+            });
         },
-        '/user/query/frequent': function(params) {
+        '/user/query/frequent': function(params, callback) {
             var module = tbm.background.user.query;
 
-            return {
+            callback({
                 timestamp: module.getTimestamp(),
                 data: module.getFrequent(),
-            };
+            });
         },
-        '/user/query/add': function(params) {
+        '/user/query/add': function(params, callback) {
+            if (!params.hasOwnProperty('query')) {
+                error('invalid params: query is required.');
+            }
+
             var module = tbm.background.user.query;
 
-            if (params.hasOwnProperty('query')) {
-                module.add(params.query);
-            } else {
-                error('invalid params: query is required.');
-            }
+            module.add(params.query);
 
-            return {
+            callback({
                 timestamp: module.getTimestamp(),
                 data: null,
-            };
+            });
         },
-        '/user/query/favorite/list': function(params) {
+        '/user/query/favorite/list': function(params, callback) {
             var module = tbm.background.user.favoriteQuery;
 
-            return {
+            callback({
                 timestamp: module.getTimestamp(),
                 data: module.getAll(),
-            };
+            });
         },
-        '/user/query/favorite/add': function(params) {
-            var module = tbm.background.user.favoriteQuery;
-
-            if (params.hasOwnProperty('query')) {
-                module.add(params.query);
-
-                return {};
-            } else {
+        '/user/query/favorite/add': function(params, callback) {
+            if (!params.hasOwnProperty('query')) {
                 error('invalid params: query is required.');
             }
-        },
-        '/user/query/favorite/remove': function(params) {
+
             var module = tbm.background.user.favoriteQuery;
 
-            if (params.hasOwnProperty('query')) {
-                module.remove(params.query);
+            module.add(params.query);
 
-                return {};
-            } else {
+            callback({});
+        },
+        '/user/query/favorite/remove': function(params, callback) {
+            if (!params.hasOwnProperty('query')) {
                 error('invalid params: query is required.');
             }
-        },
-        '/user/query/favorite/check': function(params) {
+
             var module = tbm.background.user.favoriteQuery;
 
-            if (params.hasOwnProperty('query')) {
-                return {
-                    answer: module.check(params.query),
-                };
-            } else {
+            module.remove(params.query);
+
+            callback({});
+        },
+        '/user/query/favorite/check': function(params, callback) {
+            if (!params.hasOwnProperty('query')) {
                 error('invalid params: query is required.');
             }
+
+            var module = tbm.background.user.favoriteQuery;
+
+            callback({
+                answer: module.check(params.query),
+            });
         },
     };
 
@@ -93,25 +93,29 @@ tbm.background.server2 = (function() {
         }
     };
 
-    that.request = function(path, params) {
-        var result = {
-            request: {
-                path: path,
-                params: params,
-            },
+    that.request = function(path, params, responseCallback) {
+        var request = {
+            path: path,
+            params: params,
         };
 
         try {
             checkPath(path);
 
-            result.status = 'ok';
-            result.response = jobs[path](params);
+            jobs[path](params, function(body) {
+                responseCallback({
+                    request: request,
+                    status: 'ok',
+                    body: body,
+                });
+            });
         } catch (e) {
-            result.status = 'error';
-            result.message = e.message;
+            responseCallback({
+                request: request,
+                status: 'error',
+                message: e.message,
+            });
         }
-
-        return result;
     };
 
     return that;

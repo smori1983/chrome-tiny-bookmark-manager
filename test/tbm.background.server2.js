@@ -18,19 +18,27 @@ QUnit.module('tbm.background.server2.user.query.latest', {
 });
 
 QUnit.test('with data', function(assert) {
-    this.preset();
+    var that = this;
+    var done = assert.async();
 
-    var result = this.SUT.request(this.path, {});
+    that.preset();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data, 'yyy');
+    that.SUT.request(that.path, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.equal(response.body.data, 'yyy');
+        done();
+    });
 });
 
 QUnit.test('no data', function(assert) {
-    var result = this.SUT.request(this.path, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data, '');
+    that.SUT.request(that.path, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.equal(response.body.data, '');
+        done();
+    });
 });
 
 QUnit.module('tbm.background.server2.user.query.recent', {
@@ -53,21 +61,29 @@ QUnit.module('tbm.background.server2.user.query.recent', {
 });
 
 QUnit.test('with data', function(assert) {
-    this.preset();
+    var that = this;
+    var done = assert.async();
 
-    var result = this.SUT.request(this.path, {});
+    that.preset();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data.length, 2);
-    assert.equal(result.response.data[0].query, 'yyy');
-    assert.equal(result.response.data[1].query, 'xxx');
+    that.SUT.request(that.path, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.equal(response.body.data.length, 2);
+        assert.equal(response.body.data[0].query, 'yyy');
+        assert.equal(response.body.data[1].query, 'xxx');
+        done();
+    });
 });
 
 QUnit.test('no data', function(assert) {
-    var result = this.SUT.request(this.path, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'ok');
-    assert.propEqual(result.response.data, []);
+    that.SUT.request(that.path, {}, function(response){
+        assert.equal(response.status, 'ok');
+        assert.propEqual(response.body.data, []);
+        done();
+    });
 });
 
 QUnit.module('tbm.background.server2.user.query.frequent', {
@@ -92,23 +108,31 @@ QUnit.module('tbm.background.server2.user.query.frequent', {
 });
 
 QUnit.test('with data', function(assert) {
-    this.preset();
+    var that = this;
+    var done = assert.async();
 
-    var result = this.SUT.request(this.path, {});
+    that.preset();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data.length, 2);
-    assert.equal(result.response.data[0].count, 2);
-    assert.equal(result.response.data[0].query, 'xxx');
-    assert.equal(result.response.data[1].count, 2);
-    assert.equal(result.response.data[1].query, 'yyy');
+    that.SUT.request(that.path, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.equal(response.body.data.length, 2);
+        assert.equal(response.body.data[0].count, 2);
+        assert.equal(response.body.data[0].query, 'xxx');
+        assert.equal(response.body.data[1].count, 2);
+        assert.equal(response.body.data[1].query, 'yyy');
+        done();
+    });
 });
 
 QUnit.test('no data', function(assert) {
-    var result = this.SUT.request(this.path, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'ok');
-    assert.propEqual(result.response.data, []);
+    that.SUT.request(that.path, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.propEqual(response.body.data, []);
+        done();
+    });
 });
 
 QUnit.module('tbm.background.server2.user.query.add', {
@@ -135,39 +159,65 @@ QUnit.module('tbm.background.server2.user.query.add', {
 });
 
 QUnit.test('with data', function(assert) {
-    this.preset();
+    var that = this;
+    var done = assert.async();
 
-    var result = this.SUT.request(this.pathAdd, { query: 'zzz' });
+    that.preset();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data, null);
+    var step1 = function() {
+        that.SUT.request(that.pathAdd, { query: 'zzz' }, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data, null);
+            step2();
+        });
+    };
 
-    var frequent = this.SUT.request(this.pathFrequent, {});
+    var step2 = function() {
+        that.SUT.request(that.pathFrequent, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 3);
+            assert.equal(response.body.data[0].query, 'xxx');
+            assert.equal(response.body.data[1].query, 'yyy');
+            assert.equal(response.body.data[2].query, 'zzz');
+            done();
+        });
+    };
 
-    assert.equal(frequent.status, 'ok');
-    assert.equal(frequent.response.data.length, 3);
-    assert.equal(frequent.response.data[0].query, 'xxx');
-    assert.equal(frequent.response.data[1].query, 'yyy');
-    assert.equal(frequent.response.data[2].query, 'zzz');
+    step1();
 });
 
 QUnit.test('no data', function(assert) {
-    var result = this.SUT.request(this.pathAdd, { query: 'xxx' });
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data, null);
+    var step1 = function() {
+        that.SUT.request(that.pathAdd, { query: 'xxx' }, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data, null);
+            step2();
+        });
+    };
 
-    var latest = this.SUT.request(this.pathLatest, {});
+    var step2 = function() {
+        that.SUT.request(that.pathLatest, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data, 'xxx');
+            done();
+        });
+    };
 
-    assert.equal(latest.status, 'ok');
-    assert.equal(latest.response.data, 'xxx');
+    step1();
 });
 
 QUnit.test('invalid params - query not sent', function(assert) {
-    var result = this.SUT.request(this.pathAdd, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'error');
-    assert.equal(result.message, 'invalid params: query is required.');
+    that.SUT.request(that.pathAdd, {}, function(response) {
+        assert.equal(response.status, 'error');
+        assert.equal(response.message, 'invalid params: query is required.');
+        done();
+    });
 });
 
 QUnit.module('tbm.background.server2.user.favorite', {
@@ -193,68 +243,106 @@ QUnit.module('tbm.background.server2.user.favorite', {
 });
 
 QUnit.test('list - with data', function(assert) {
-    this.preset();
+    var that = this;
+    var done = assert.async();
 
-    var result = this.SUT.request(this.pathList, {});
+    that.preset();
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data.length, 2);
-    assert.equal(result.response.data[0].query, 'xxx');
-    assert.equal(result.response.data[1].query, 'yyy');
+    that.SUT.request(that.pathList, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.equal(response.body.data.length, 2);
+        assert.equal(response.body.data[0].query, 'xxx');
+        assert.equal(response.body.data[1].query, 'yyy');
+        done();
+    });
 });
 
 QUnit.test('list - no data', function(assert) {
-    var result = this.SUT.request(this.pathList, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'ok');
-    assert.propEqual(result.response.data, []);
+    that.SUT.request(that.pathList, {}, function(response) {
+        assert.equal(response.status, 'ok');
+        assert.propEqual(response.body.data, []);
+        done();
+    });
 });
 
 QUnit.test('operation', function(assert) {
-    var result;
+    var that = this;
+    var done = assert.async();
 
-    result = this.SUT.request(this.pathCheck, { query: 'zzz' });
+    var step1 = function() {
+        that.SUT.request(that.pathCheck, { query: 'zzz' }, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.answer, false);
+            step2();
+        });
+    };
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.answer, false);
+    var step2 = function() {
+        that.SUT.request(that.pathAdd, { query: 'zzz' }, function(response) {
+            assert.equal(response.status, 'ok');
+            step3();
+        });
+    };
 
-    result = this.SUT.request(this.pathAdd, { query: 'zzz' });
+    var step3 = function() {
+        that.SUT.request(that.pathList, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 1);
+            assert.equal(response.body.data[0].query, 'zzz');
+            step4();
+        });
+    };
 
-    assert.equal(result.status, 'ok');
+    var step4 = function() {
+        that.SUT.request(that.pathRemove, { query: 'zzz' }, function(response) {
+            assert.equal(response.status, 'ok');
+            step5();
+        });
+    };
 
-    result = this.SUT.request(this.pathList, {});
+    var step5 = function() {
+        that.SUT.request(that.pathList, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 0);
+            done();
+        });
+    };
 
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data.length, 1);
-    assert.equal(result.response.data[0].query, 'zzz');
-
-    result = this.SUT.request(this.pathRemove, { query: 'zzz' });
-
-    assert.equal(result.status, 'ok');
-
-    result = this.SUT.request(this.pathList, {});
-
-    assert.equal(result.status, 'ok');
-    assert.equal(result.response.data.length, 0);
+    step1();
 });
 
 QUnit.test('add - invalid params - query not sent', function(assert) {
-    var result = this.SUT.request(this.pathAdd, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'error');
-    assert.equal(result.message, 'invalid params: query is required.');
+    that.SUT.request(that.pathAdd, {}, function(response) {
+        assert.equal(response.status, 'error');
+        assert.equal(response.message, 'invalid params: query is required.');
+        done();
+    });
 });
 
 QUnit.test('remove - invalid params - query not sent', function(assert) {
-    var result = this.SUT.request(this.pathRemove, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'error');
-    assert.equal(result.message, 'invalid params: query is required.');
+    that.SUT.request(that.pathRemove, {}, function(response) {
+        assert.equal(response.status, 'error');
+        assert.equal(response.message, 'invalid params: query is required.');
+        done();
+    });
 });
 
 QUnit.test('check - invalid params - query not sent', function(assert) {
-    var result = this.SUT.request(this.pathCheck, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'error');
-    assert.equal(result.message, 'invalid params: query is required.');
+    that.SUT.request(that.pathCheck, {}, function(response) {
+        assert.equal(response.status, 'error');
+        assert.equal(response.message, 'invalid params: query is required.');
+        done();
+    });
 });

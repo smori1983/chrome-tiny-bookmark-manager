@@ -14,8 +14,12 @@ QUnit.cases.init([
     { path: '/USER/QUERY/LATEST' },
 ]).
 test('invalid path', function(params, assert) {
-    var result = this.SUT.request(params.path, {});
+    var that = this;
+    var done = assert.async();
 
-    assert.equal(result.status, 'error');
-    assert.equal(result.message, 'path not found.');
+    that.SUT.request(params.path, {}, function(response) {
+        assert.equal(response.status, 'error');
+        assert.equal(response.message, 'path not found.');
+        done();
+    });
 });
