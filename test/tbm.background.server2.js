@@ -2,9 +2,6 @@ QUnit.module('tbm.background.server2.search', {
     beforeEach: function() {
         this.path = '/bookmark/search';
 
-        this.preset = function() {
-        };
-
         this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
@@ -52,6 +49,65 @@ QUnit.test('test - invalid params - query not sent', function(assert) {
             that.SUT.request(that.path, {}, function(response) {
                 assert.equal(response.status, 'error');
                 assert.equal(response.message, 'invalid params: query is required.');
+                done();
+            });
+        });
+    };
+
+    start();
+});
+
+QUnit.module('tbm.background.server2.bookmarks', {
+    beforeEach: function() {
+        this.path = '/bookmark/bookmarks';
+
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
+
+        localStorage.clear();
+    },
+    afterEach: function() {
+        localStorage.clear();
+    }
+});
+
+QUnit.test('test - with query', function(assert) {
+    var that = this;
+    var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.start(function() {
+            that.SUT.request(that.path, { query: '[t2]' }, function(response) {
+                assert.equal(response.status, 'ok');
+                assert.equal(response.body.data.length, 1);
+                done();
+            });
+        });
+    };
+
+    start();
+});
+
+QUnit.test('test - without query', function(assert) {
+    var that = this;
+    var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.start(function() {
+            that.SUT.request(that.path, {}, function(response) {
+                assert.equal(response.status, 'ok');
+                assert.equal(response.body.data.length, 3);
                 done();
             });
         });
