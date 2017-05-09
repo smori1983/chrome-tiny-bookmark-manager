@@ -1,7 +1,22 @@
-tbm.background.server2 = (function() {
+/**
+ * @param chrome.bookmarks bookmarksApi
+ */
+tbm.background.server2 = function(bookmarksApi) {
     var that = {};
 
+    var manager = tbm.bookmarkManager(bookmarksApi);
+
     var jobs = {
+        '/bookmark/search': function(params, callback) {
+            if (!params.hasOwnProperty('query')) {
+                error('invalid params: query is required.');
+            }
+
+            callback({
+                timestamp: manager.getBookmarks(params.query),
+                data: manager.getBookmarks(params.query),
+            });
+        },
         '/user/query/latest': function(params, callback) {
             var module = tbm.background.user.query;
 
@@ -93,6 +108,10 @@ tbm.background.server2 = (function() {
         }
     };
 
+    that.start = function(callback) {
+        manager.init(callback);
+    };
+
     that.request = function(path, params, responseCallback) {
         var request = {
             path: path,
@@ -119,4 +138,4 @@ tbm.background.server2 = (function() {
     };
 
     return that;
-})();
+};

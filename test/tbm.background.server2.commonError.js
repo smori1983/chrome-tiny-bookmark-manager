@@ -1,6 +1,6 @@
 QUnit.module('tbm.background.server2.commonError', {
     beforeEach: function() {
-        this.SUT = tbm.background.server2;
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
     },
@@ -17,9 +17,19 @@ test('invalid path', function(params, assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(params.path, {}, function(response) {
-        assert.equal(response.status, 'error');
-        assert.equal(response.message, 'path not found.');
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(params.path, {}, function(response) {
+            assert.equal(response.status, 'error');
+            assert.equal(response.message, 'path not found.');
+            done();
+        });
+    };
+
+    start();
 });

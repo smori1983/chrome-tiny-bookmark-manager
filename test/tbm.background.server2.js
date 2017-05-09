@@ -1,3 +1,65 @@
+QUnit.module('tbm.background.server2.search', {
+    beforeEach: function() {
+        this.path = '/bookmark/search';
+
+        this.preset = function() {
+        };
+
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
+
+        localStorage.clear();
+    },
+    afterEach: function() {
+        localStorage.clear();
+    }
+});
+
+QUnit.test('test', function(assert) {
+    var that = this;
+    var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.start(function() {
+            that.SUT.request(that.path, { query: '[t1]' }, function(response) {
+                assert.equal(response.status, 'ok');
+                assert.equal(response.body.data.length, 1);
+                done();
+            });
+        });
+    };
+
+    start();
+});
+
+QUnit.test('test - invalid params - query not sent', function(assert) {
+    var that = this;
+    var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.start(function() {
+            that.SUT.request(that.path, {}, function(response) {
+                assert.equal(response.status, 'error');
+                assert.equal(response.message, 'invalid params: query is required.');
+                done();
+            });
+        });
+    };
+
+    start();
+});
+
 QUnit.module('tbm.background.server2.user.query.latest', {
     beforeEach: function() {
         this.path = '/user/query/latest';
@@ -21,24 +83,43 @@ QUnit.test('with data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.preset();
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
-    that.SUT.request(that.path, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.equal(response.body.data, 'yyy');
-        done();
-    });
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data, 'yyy');
+            done();
+        });
+    };
+
+    that.preset();
+    start();
 });
 
 QUnit.test('no data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.path, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.equal(response.body.data, '');
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data, '');
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.module('tbm.background.server2.user.query.recent', {
@@ -64,26 +145,45 @@ QUnit.test('with data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.preset();
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
-    that.SUT.request(that.path, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.equal(response.body.data.length, 2);
-        assert.equal(response.body.data[0].query, 'yyy');
-        assert.equal(response.body.data[1].query, 'xxx');
-        done();
-    });
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 2);
+            assert.equal(response.body.data[0].query, 'yyy');
+            assert.equal(response.body.data[1].query, 'xxx');
+            done();
+        });
+    };
+
+    that.preset();
+    start();
 });
 
 QUnit.test('no data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.path, {}, function(response){
-        assert.equal(response.status, 'ok');
-        assert.propEqual(response.body.data, []);
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response){
+            assert.equal(response.status, 'ok');
+            assert.propEqual(response.body.data, []);
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.module('tbm.background.server2.user.query.frequent', {
@@ -111,28 +211,47 @@ QUnit.test('with data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.preset();
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
-    that.SUT.request(that.path, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.equal(response.body.data.length, 2);
-        assert.equal(response.body.data[0].count, 2);
-        assert.equal(response.body.data[0].query, 'xxx');
-        assert.equal(response.body.data[1].count, 2);
-        assert.equal(response.body.data[1].query, 'yyy');
-        done();
-    });
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 2);
+            assert.equal(response.body.data[0].count, 2);
+            assert.equal(response.body.data[0].query, 'xxx');
+            assert.equal(response.body.data[1].count, 2);
+            assert.equal(response.body.data[1].query, 'yyy');
+            done();
+        });
+    };
+
+    that.preset();
+    start();
 });
 
 QUnit.test('no data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.path, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.propEqual(response.body.data, []);
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.propEqual(response.body.data, []);
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.module('tbm.background.server2.user.query.add', {
@@ -162,7 +281,11 @@ QUnit.test('with data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.preset();
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
     var step1 = function() {
         that.SUT.request(that.pathAdd, { query: 'zzz' }, function(response) {
@@ -183,12 +306,19 @@ QUnit.test('with data', function(assert) {
         });
     };
 
-    step1();
+    that.preset();
+    start();
 });
 
 QUnit.test('no data', function(assert) {
     var that = this;
     var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
     var step1 = function() {
         that.SUT.request(that.pathAdd, { query: 'xxx' }, function(response) {
@@ -206,18 +336,28 @@ QUnit.test('no data', function(assert) {
         });
     };
 
-    step1();
+    start();
 });
 
 QUnit.test('invalid params - query not sent', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.pathAdd, {}, function(response) {
-        assert.equal(response.status, 'error');
-        assert.equal(response.message, 'invalid params: query is required.');
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.pathAdd, {}, function(response) {
+            assert.equal(response.status, 'error');
+            assert.equal(response.message, 'invalid params: query is required.');
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.module('tbm.background.server2.user.favorite', {
@@ -246,31 +386,56 @@ QUnit.test('list - with data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.preset();
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
-    that.SUT.request(that.pathList, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.equal(response.body.data.length, 2);
-        assert.equal(response.body.data[0].query, 'xxx');
-        assert.equal(response.body.data[1].query, 'yyy');
-        done();
-    });
+    var step1 = function() {
+        that.SUT.request(that.pathList, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 2);
+            assert.equal(response.body.data[0].query, 'xxx');
+            assert.equal(response.body.data[1].query, 'yyy');
+            done();
+        });
+    };
+
+    that.preset();
+    start();
 });
 
 QUnit.test('list - no data', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.pathList, {}, function(response) {
-        assert.equal(response.status, 'ok');
-        assert.propEqual(response.body.data, []);
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.pathList, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.propEqual(response.body.data, []);
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.test('operation', function(assert) {
     var that = this;
     var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
 
     var step1 = function() {
         that.SUT.request(that.pathCheck, { query: 'zzz' }, function(response) {
@@ -311,38 +476,68 @@ QUnit.test('operation', function(assert) {
         });
     };
 
-    step1();
+    start();
 });
 
 QUnit.test('add - invalid params - query not sent', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.pathAdd, {}, function(response) {
-        assert.equal(response.status, 'error');
-        assert.equal(response.message, 'invalid params: query is required.');
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.pathAdd, {}, function(response) {
+            assert.equal(response.status, 'error');
+            assert.equal(response.message, 'invalid params: query is required.');
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.test('remove - invalid params - query not sent', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.pathRemove, {}, function(response) {
-        assert.equal(response.status, 'error');
-        assert.equal(response.message, 'invalid params: query is required.');
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.pathRemove, {}, function(response) {
+            assert.equal(response.status, 'error');
+            assert.equal(response.message, 'invalid params: query is required.');
+            done();
+        });
+    };
+
+    start();
 });
 
 QUnit.test('check - invalid params - query not sent', function(assert) {
     var that = this;
     var done = assert.async();
 
-    that.SUT.request(that.pathCheck, {}, function(response) {
-        assert.equal(response.status, 'error');
-        assert.equal(response.message, 'invalid params: query is required.');
-        done();
-    });
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.pathCheck, {}, function(response) {
+            assert.equal(response.status, 'error');
+            assert.equal(response.message, 'invalid params: query is required.');
+            done();
+        });
+    };
+
+    start();
 });
