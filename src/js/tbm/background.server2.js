@@ -29,6 +29,12 @@ tbm.background.server2 = function(bookmarksApi) {
                 data: manager.getFolders(),
             });
         },
+        '/bookmark/tags': function(data, callback) {
+            callback({
+                timestamp: manager.getTimestamp(),
+                data: manager.getTags(),
+            });
+        },
         '/user/query/latest': function(params, callback) {
             var module = tbm.background.user.query;
 

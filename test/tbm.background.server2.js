@@ -142,6 +142,40 @@ QUnit.test('test', function(assert) {
     start();
 });
 
+QUnit.module('tbm.background.server2.tags', {
+    beforeEach: function() {
+        this.path = '/bookmark/tags';
+
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
+
+        localStorage.clear();
+    },
+    afterEach: function() {
+        localStorage.clear();
+    }
+});
+
+QUnit.test('test', function(assert) {
+    var that = this;
+    var done = assert.async();
+
+    var start = function() {
+        that.SUT.start(function() {
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 2);
+            done();
+        });
+    };
+
+    start();
+});
+
 QUnit.module('tbm.background.server2.user.query.latest', {
     beforeEach: function() {
         this.path = '/user/query/latest';
