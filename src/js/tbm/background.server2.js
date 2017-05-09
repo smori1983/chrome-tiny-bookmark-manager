@@ -35,6 +35,22 @@ tbm.background.server2 = function(bookmarksApi) {
                 data: manager.getTags(),
             });
         },
+        '/bookmark/item/update': function(params, callback) {
+            if (!params.hasOwnProperty('id')) {
+                error('invalid params: id is required.');
+            }
+            if (!params.hasOwnProperty('title')) {
+                error('invalid params: title is required.');
+            }
+
+            manager.updateBookmark(params.id, {
+                title: params.title,
+            }, function(updated) {
+                callback({
+                    bookmark: updated,
+                });
+            });
+        },
         '/user/query/latest': function(params, callback) {
             var module = tbm.background.user.query;
 
