@@ -8,7 +8,10 @@ tbm.testLib.bookmarks = (function() {
     that.getTree = function(callback) {
         var result = [tbm.testLib.bookmarkTreeNode.getRootNode()];
 
-        callback(result);
+        // Emulates asynchronous callback.
+        setTimeout(function() {
+            callback(result);
+        }, 10);
     };
 
     /**

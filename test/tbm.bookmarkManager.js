@@ -18,10 +18,12 @@ QUnit.module('tbm.bookmarkManager', {
 QUnit.test('getBookmarks', function(assert) {
     var that = this;
     var manager = that.SUT(tbm.testLib.bookmarks);
+    var done = assert.async();
 
-    manager.init();
-
-    assert.propEqual(that.foundIds(manager.getBookmarks()), [101, 103, 102]);
+    manager.init(function() {
+        assert.propEqual(that.foundIds(manager.getBookmarks()), [101, 103, 102]);
+        done();
+    });
 });
 
 QUnit.cases.init([
@@ -31,17 +33,18 @@ QUnit.cases.init([
 test('getBookmarks - with query', function(params, assert) {
     var that = this;
     var manager = that.SUT(tbm.testLib.bookmarks);
+    var done = assert.async();
 
-    manager.init();
-
-    assert.propEqual(that.foundIds(manager.getBookmarks(params.query)), params.ids);
+    manager.init(function() {
+        assert.propEqual(that.foundIds(manager.getBookmarks(params.query)), params.ids);
+        done();
+    });
 });
 
 QUnit.test('getFolders', function(assert) {
     var that = this;
     var manager = that.SUT(tbm.testLib.bookmarks);
-
-    manager.init();
+    var done = assert.async();
 
     var expected = [
         { name: 'folder_01_01' },
@@ -49,21 +52,26 @@ QUnit.test('getFolders', function(assert) {
         { name: 'ブックマーク バー' },
     ];
 
-    assert.propEqual(manager.getFolders(), expected);
+    manager.init(function() {
+        assert.propEqual(manager.getFolders(), expected);
+        done();
+    });
 });
 
 QUnit.test('getTags', function(assert) {
     var that = this;
     var manager = that.SUT(tbm.testLib.bookmarks);
-
-    manager.init();
+    var done = assert.async();
 
     var expected = [
         { name: 't1' },
         { name: 't2' },
     ];
 
-    assert.propEqual(manager.getTags(), expected);
+    manager.init(function() {
+        assert.propEqual(manager.getTags(), expected);
+        done();
+    });
 });
 
 QUnit.test('updateBookmark', function(assert) {
@@ -71,13 +79,13 @@ QUnit.test('updateBookmark', function(assert) {
     var manager = that.SUT(tbm.testLib.bookmarks);
     var done = assert.async();
 
-    manager.init();
-
-    manager.updateBookmark(100, {
-        title: 'Modified Title',
-    }, function(bookmark) {
-        assert.equal(bookmark.id, 100);
-        assert.equal(bookmark.title, 'Modified Title');
-        done();
+    manager.init(function() {
+        manager.updateBookmark(100, {
+            title: 'Modified Title',
+        }, function(bookmark) {
+            assert.equal(bookmark.id, 100);
+            assert.equal(bookmark.title, 'Modified Title');
+            done();
+        });
     });
 });

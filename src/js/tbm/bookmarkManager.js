@@ -9,12 +9,13 @@ tbm.bookmarkManager = function(bookmarksApi) {
 
     var bookmarkData;
 
-    that.init = function() {
+    that.init = function(callback) {
         dataBuilder = tbm.bookmarkDataBuilder;
         search = tbm.bookmarkSearch;
 
         bookmarksApi.getTree(function(rootNodes) {
             bookmarkData = dataBuilder.build(rootNodes[0]);
+            callback();
         });
     };
 
