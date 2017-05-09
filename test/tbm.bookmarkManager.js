@@ -65,3 +65,19 @@ QUnit.test('getTags', function(assert) {
 
     assert.propEqual(manager.getTags(), expected);
 });
+
+QUnit.test('updateBookmark', function(assert) {
+    var that = this;
+    var manager = that.SUT(tbm.testLib.bookmarks);
+    var done = assert.async();
+
+    manager.init();
+
+    manager.updateBookmark(100, {
+        title: 'Modified Title',
+    }, function(bookmark) {
+        assert.equal(bookmark.id, 100);
+        assert.equal(bookmark.title, 'Modified Title');
+        done();
+    });
+});

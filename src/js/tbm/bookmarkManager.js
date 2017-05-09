@@ -34,5 +34,19 @@ tbm.bookmarkManager = function(bookmarksApi) {
         return bookmarkData.tags;
     };
 
+    that.updateBookmark = function(id, params, callback) {
+        if (!params.hasOwnProperty('title')) {
+            return;
+        }
+
+        bookmarksApi.update(id, params, function(updated) {
+            callback({
+                id: updated.id,
+                title: updated.title,
+                url: updated.url,
+            });
+        });
+    };
+
     return that;
 };
