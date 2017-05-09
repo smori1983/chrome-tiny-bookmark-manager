@@ -7,7 +7,7 @@ QUnit.module('tbm.background.server2.user.query.latest', {
             tbm.background.user.query.add('yyy');
         };
 
-        this.SUT = tbm.background.server2;
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
         tbm.background.user.query.reload();
@@ -50,7 +50,7 @@ QUnit.module('tbm.background.server2.user.query.recent', {
             tbm.background.user.query.add('yyy');
         };
 
-        this.SUT = tbm.background.server2;
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
         tbm.background.user.query.reload();
@@ -97,7 +97,7 @@ QUnit.module('tbm.background.server2.user.query.frequent', {
             tbm.background.user.query.add('yyy');
         };
 
-        this.SUT = tbm.background.server2;
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
         tbm.background.user.query.reload();
@@ -148,7 +148,7 @@ QUnit.module('tbm.background.server2.user.query.add', {
             tbm.background.user.query.add('yyy');
         };
 
-        this.SUT = tbm.background.server2;
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
         tbm.background.user.query.reload();
@@ -232,7 +232,7 @@ QUnit.module('tbm.background.server2.user.favorite', {
             tbm.background.user.favoriteQuery.add('yyy');
         };
 
-        this.SUT = tbm.background.server2;
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
 
         localStorage.clear();
         tbm.background.user.favoriteQuery.reload();
