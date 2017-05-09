@@ -26,5 +26,13 @@ tbm.bookmarkManager = function(bookmarksApi) {
         }
     };
 
+    that.getFolders = function() {
+        return bookmarkData.folders;
+    };
+
+    that.getTags = function() {
+        return bookmarkData.tags;
+    };
+
     return that;
 };

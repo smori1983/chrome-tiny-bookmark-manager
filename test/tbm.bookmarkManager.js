@@ -36,3 +36,32 @@ test('getBookmarks - with query', function(params, assert) {
 
     assert.propEqual(that.foundIds(manager.getBookmarks(params.query)), params.ids);
 });
+
+QUnit.test('getFolders', function(assert) {
+    var that = this;
+    var manager = that.SUT(tbm.testLib.bookmarks);
+
+    manager.init();
+
+    var expected = [
+        { name: 'folder_01_01' },
+        { name: 'その他のブックマーク' },
+        { name: 'ブックマーク バー' },
+    ];
+
+    assert.propEqual(manager.getFolders(), expected);
+});
+
+QUnit.test('getTags', function(assert) {
+    var that = this;
+    var manager = that.SUT(tbm.testLib.bookmarks);
+
+    manager.init();
+
+    var expected = [
+        { name: 't1' },
+        { name: 't2' },
+    ];
+
+    assert.propEqual(manager.getTags(), expected);
+});
