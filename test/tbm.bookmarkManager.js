@@ -89,3 +89,29 @@ QUnit.test('updateBookmark', function(assert) {
         });
     });
 });
+
+QUnit.test('update', function(assert) {
+    var that = this;
+    var manager = that.SUT(tbm.testLib.bookmarks);
+    var done = assert.async();
+
+    var timestamp1;
+    var timestamp2;
+
+    var step1 = function() {
+        manager.init(function() {
+            timestamp1 = manager.getTimestamp();
+            step2();
+        });
+    };
+
+    var step2 = function() {
+        manager.update(function() {
+            timestamp2 = manager.getTimestamp();
+            assert.ok(timestamp1 < timestamp2);
+            done();
+        });
+    };
+
+    step1();
+});
