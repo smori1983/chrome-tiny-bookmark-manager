@@ -29,7 +29,7 @@ tbm.background.server2 = function(bookmarksApi) {
                 data: manager.getFolders(),
             });
         },
-        '/bookmark/tags': function(data, callback) {
+        '/bookmark/tags': function(params, callback) {
             callback({
                 timestamp: manager.getTimestamp(),
                 data: manager.getTags(),
