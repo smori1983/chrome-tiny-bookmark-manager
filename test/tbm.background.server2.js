@@ -22,12 +22,10 @@ QUnit.test('test', function(assert) {
     };
 
     var step1 = function() {
-        that.SUT.start(function() {
-            that.SUT.request(that.path, { query: '[t1]' }, function(response) {
-                assert.equal(response.status, 'ok');
-                assert.equal(response.body.data.length, 1);
-                done();
-            });
+        that.SUT.request(that.path, { query: '[t1]' }, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 1);
+            done();
         });
     };
 
@@ -45,12 +43,10 @@ QUnit.test('test - invalid params - query not sent', function(assert) {
     };
 
     var step1 = function() {
-        that.SUT.start(function() {
-            that.SUT.request(that.path, {}, function(response) {
-                assert.equal(response.status, 'error');
-                assert.equal(response.message, 'invalid params: query is required.');
-                done();
-            });
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'error');
+            assert.equal(response.message, 'invalid params: query is required.');
+            done();
         });
     };
 
@@ -81,12 +77,10 @@ QUnit.test('test - with query', function(assert) {
     };
 
     var step1 = function() {
-        that.SUT.start(function() {
-            that.SUT.request(that.path, { query: '[t2]' }, function(response) {
-                assert.equal(response.status, 'ok');
-                assert.equal(response.body.data.length, 1);
-                done();
-            });
+        that.SUT.request(that.path, { query: '[t2]' }, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 1);
+            done();
         });
     };
 
@@ -104,12 +98,44 @@ QUnit.test('test - without query', function(assert) {
     };
 
     var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 3);
+            done();
+        });
+    };
+
+    start();
+});
+
+QUnit.module('tbm.background.server2.folders', {
+    beforeEach: function() {
+        this.path = '/bookmark/folders';
+
+        this.SUT = tbm.background.serverFactory.create(tbm.testLib.bookmarks);
+
+        localStorage.clear();
+    },
+    afterEach: function() {
+        localStorage.clear();
+    }
+});
+
+QUnit.test('test', function(assert) {
+    var that = this;
+    var done = assert.async();
+
+    var start = function() {
         that.SUT.start(function() {
-            that.SUT.request(that.path, {}, function(response) {
-                assert.equal(response.status, 'ok');
-                assert.equal(response.body.data.length, 3);
-                done();
-            });
+            step1();
+        });
+    };
+
+    var step1 = function() {
+        that.SUT.request(that.path, {}, function(response) {
+            assert.equal(response.status, 'ok');
+            assert.equal(response.body.data.length, 3);
+            done();
         });
     };
 

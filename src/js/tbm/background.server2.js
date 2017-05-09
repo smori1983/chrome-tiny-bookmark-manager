@@ -13,14 +13,20 @@ tbm.background.server2 = function(bookmarksApi) {
             }
 
             callback({
-                timestamp: manager.getBookmarks(params.query),
+                timestamp: manager.getTimestamp(),
                 data: manager.getBookmarks(params.query),
             });
         },
         '/bookmark/bookmarks': function(params, callback) {
             callback({
-                timestamp: manager.getBookmarks(params.query),
+                timestamp: manager.getTimestamp(),
                 data: manager.getBookmarks(params.query || null),
+            });
+        },
+        '/bookmark/folders': function(params, callback) {
+            callback({
+                timestamp: manager.getTimestamp(),
+                data: manager.getFolders(),
             });
         },
         '/user/query/latest': function(params, callback) {
