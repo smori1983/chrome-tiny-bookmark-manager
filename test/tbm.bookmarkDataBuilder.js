@@ -3,7 +3,7 @@ QUnit.module('tbm.bookmarkDataBuilder', {
         this.SUT = tbm.bookmarkDataBuilder;
     },
     afterEach: function() {
-    }
+    },
 });
 
 QUnit.test('build', function(assert) {

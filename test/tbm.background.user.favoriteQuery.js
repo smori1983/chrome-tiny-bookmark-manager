@@ -13,7 +13,7 @@ QUnit.module('tbm.background.user.favoriteQuery', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.cases.init([

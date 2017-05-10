@@ -3,7 +3,7 @@ QUnit.module('tbm.bookmarkUtil', {
         this.SUT = tbm.bookmarkUtil;
     },
     afterEach: function() {
-    }
+    },
 });
 
 QUnit.cases.init([

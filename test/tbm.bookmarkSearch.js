@@ -26,7 +26,7 @@ QUnit.module('tbm.bookmarkSearch', {
         };
     },
     afterEach: function() {
-    }
+    },
 });
 
 QUnit.cases.init([

@@ -12,7 +12,7 @@ QUnit.module('tbm.bookmarkManager', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('getBookmarks', function(assert) {

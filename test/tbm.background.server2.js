@@ -8,7 +8,7 @@ QUnit.module('tbm.background.server2.search', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('test', function(assert) {
@@ -63,7 +63,7 @@ QUnit.module('tbm.background.server2.bookmarks', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('test - with query', function(assert) {
@@ -118,7 +118,7 @@ QUnit.module('tbm.background.server2.folders', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('test', function(assert) {
@@ -152,7 +152,7 @@ QUnit.module('tbm.background.server2.tags', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('test', function(assert) {
@@ -186,7 +186,7 @@ QUnit.module('tbm.background.server2.item.update', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('test', function(assert) {
@@ -269,7 +269,7 @@ QUnit.module('tbm.background.server2.user.query.latest', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('with data', function(assert) {
@@ -331,7 +331,7 @@ QUnit.module('tbm.background.server2.user.query.recent', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('with data', function(assert) {
@@ -397,7 +397,7 @@ QUnit.module('tbm.background.server2.user.query.frequent', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('with data', function(assert) {
@@ -467,7 +467,7 @@ QUnit.module('tbm.background.server2.user.query.add', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('with data', function(assert) {
@@ -572,7 +572,7 @@ QUnit.module('tbm.background.server2.user.favorite', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('list - with data', function(assert) {

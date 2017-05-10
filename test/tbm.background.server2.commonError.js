@@ -6,7 +6,7 @@ QUnit.module('tbm.background.server2.commonError', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.cases.init([
