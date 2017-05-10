@@ -103,7 +103,14 @@ grunt.initConfig({
                 "src/js/tbm/util.js",
                 "src/js/tbm/setting.js",
                 "src/js/tbm/background.HEAD.js",
-                "src/js/tbm/background.*.js"
+                "src/js/tbm/background.user.favoriteQuery.js",
+                "src/js/tbm/background.user.query.js",
+                "src/js/tbm/bookmarkUtil.js",
+                "src/js/tbm/bookmarkDataBuilder.js",
+                "src/js/tbm/bookmarkSearch.js",
+                "src/js/tbm/bookmarkManager.js",
+                "src/js/tbm/background.server2.js",
+                "src/js/tbm/background.serverFactory.js"
             ],
             dest: "<%= dist %>/js/tbm.background.js"
         },

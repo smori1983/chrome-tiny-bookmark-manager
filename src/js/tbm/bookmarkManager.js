@@ -4,6 +4,8 @@
 tbm.bookmarkManager = function(bookmarksApi) {
     var that = {};
 
+    var importing = false;
+
     var dataBuilder;
     var search;
 
@@ -17,13 +19,59 @@ tbm.bookmarkManager = function(bookmarksApi) {
         that.update(callback);
     };
 
-    that.update = function(callback) {
-        bookmarksApi.getTree(function(rootNodes) {
-            bookmarkData = dataBuilder.build(rootNodes[0]);
-            timestamp = new Date().getTime();
-            callback();
-        });
-    };
+    that.update = (function() {
+        var wait = 100;
+        var inProgress = false;
+        var eventCount = 0;
+
+        var execute = function(callback) {
+            var timeLabel = 'bookmark scan';
+
+            smodules.util.console.time(timeLabel);
+
+            bookmarksApi.getTree(function(rootNodes) {
+                bookmarkData = dataBuilder.build(rootNodes[0]);
+                timestamp = new Date().getTime();
+
+                smodules.util.console.timeEnd(timeLabel);
+
+                inProgress = false;
+                eventCount = 0;
+
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
+        };
+
+        return function(callback, isRecursive) {
+            var logMsg = 'update - execute() %s - eventCount = %d';
+
+            if (importing) {
+                return;
+            }
+
+            eventCount += isRecursive ? 0 : 1;
+
+            if (inProgress) {
+                return;
+            }
+
+            inProgress = true;
+
+            window.setTimeout(function() {
+                if (eventCount <= 1) {
+                    smodules.util.console.log(logMsg.format('called', eventCount));
+                    execute(callback);
+                } else {
+                    smodules.util.console.log(logMsg.format('not called', eventCount));
+                    inProgress = false;
+                    eventCount = Math.floor(eventCount / 2);
+                    that.update(callback, true);
+                }
+            }, wait);
+        };
+    })();
 
     that.getTimestamp = function() {
         return timestamp;
@@ -57,6 +105,14 @@ tbm.bookmarkManager = function(bookmarksApi) {
                 url: updated.url,
             });
         });
+    };
+
+    that.importLock = function() {
+        importing = true;
+    };
+
+    that.importUnlock = function() {
+        importing = false;
     };
 
     return that;

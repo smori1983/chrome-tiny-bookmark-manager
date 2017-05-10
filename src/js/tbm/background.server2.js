@@ -146,6 +146,10 @@ tbm.background.server2 = function(bookmarksApi) {
         manager.init(callback);
     };
 
+    that.crawl = function(callback) {
+        manager.update(callback);
+    };
+
     that.request = function(path, params, responseCallback) {
         var request = {
             path: path,

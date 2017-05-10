@@ -1,16 +1,15 @@
 $(function() {
+    var searchForm  = '#search-form';
+    var searchQuery = '#search-query';
+    var searchMsg   = '#search-msg';
 
-    var searchForm   = '#search-form',
-        searchQuery  = '#search-query',
-        searchMsg    = '#search-msg',
+    var details = chrome.app.getDetails();
+    var locale  = window.navigator.language === 'ja' ? 'ja' : 'en';
 
-        details = chrome.app.getDetails(),
-        locale  = window.navigator.language === 'ja' ? 'ja' : 'en',
+    var query = '';
+    var bookmarkRenderer = null;
 
-        query = '',
-        bookmarkRenderer = null,
-
-        isManualSubmit = true;
+    var isManualSubmit = true;
 
     // template prefetch
     smodules.template.
@@ -34,12 +33,12 @@ $(function() {
 
     // search form submit
     $(searchForm).submit(function() {
-        var tab      = '#tab-main',
-            menu     = '#search-result',
-            content  = '#search-result-content',
-            summary  = '#search-result-summary',
-            favorite = '#add-favorite-button',
-            template = '/template/bookmark-item-set.html';
+        var tab      = '#tab-main';
+        var menu     = '#search-result';
+        var content  = '#search-result-content';
+        var summary  = '#search-result-summary';
+        var favorite = '#add-favorite-button';
+        var template = '/template/bookmark-item-set.html';
 
         return function(e) {
             e.preventDefault();
@@ -61,11 +60,11 @@ $(function() {
 
             tbm.main.sendRequest('/bookmark/search', { query: query }, function(response) {
                 $(content).empty();
-                $(summary).text('%s (%d)'.format(query, response.data.length));
+                $(summary).text('%s (%d)'.format(query, response.body.data.length));
 
-                if (response.data.length > 0) {
+                if (response.body.data.length > 0) {
                     bookmarkRenderer = tbm.util.delayedArrayAccess({
-                        array: response.data,
+                        array: response.body.data,
                         interval: 300,
                         step: 20,
                         together: true,
@@ -134,8 +133,10 @@ $(function() {
     if (tbm.setting.get('latest_query') === 'yes') {
         window.setTimeout(function() {
             tbm.main.sendRequest('/user/query/latest', {}, function(response) {
-                $(searchQuery).val(response.data);
-                $(searchForm).submit();
+                if (response.status === 'ok') {
+                    $(searchQuery).val(response.body.data);
+                    $(searchForm).submit();
+                }
             });
         }, 600);
     }
@@ -165,10 +166,11 @@ $(function() {
 
         $('body').click(function(e) {
             smodules.ui.hasClass(e, className, function(target) {
-                tbm.main.sendRequest('/user/query/favorite/remove', { query: $(target).prev().text() });
-                $(target).parent().remove();
-                tbm.main.showFavoriteQueries();
-                tbm.main.checkFavoriteStatus(query);
+                tbm.main.sendRequest('/user/query/favorite/remove', { query: $(target).prev().text() }, function() {
+                    $(target).parent().remove();
+                    tbm.main.showFavoriteQueries();
+                    tbm.main.checkFavoriteStatus(query);
+                });
             });
         }).mouseover(function(e) {
             smodules.ui.hasClass(e, className, function(target) {
@@ -183,14 +185,14 @@ $(function() {
 
     // edit bookmark title
     (function() {
-        var button    = 'edit-button',
-            menu      = 'bookmark-edit',
-            editTitle = 'bookmark-edit-title';
+        var button    = 'edit-button';
+        var menu      = 'bookmark-edit';
+        var editTitle = 'bookmark-edit-title';
 
         $('body').click(function(e) {
             smodules.ui.hasClass(e, button, function(target) {
-                var editBound = $(target).parent(),
-                    form      = editBound.prev();
+                var editBound = $(target).parent();
+                var form      = editBound.prev();
 
                 editBound.hide();
                 form.show().find('input:first').val(editBound.find('a:first').text()).focus();
@@ -202,13 +204,14 @@ $(function() {
             });
         }).submit(function(e) {
             smodules.ui.hasClass(e, menu, function(target) {
-                var bookmark = {
-                    id:    $(target).parent().attr('id').replace('bookmark-', ''),
-                    title: $(target).find('input:first').val(),
-                };
+                var id = $(target).parent().attr('id').replace('bookmark-', '');
+                var title = $(target).find('input:first').val();
 
-                tbm.main.sendRequest('/bookmark/item/update', { bookmark: bookmark }, function(response) {
-                    $(target).hide().next().show().find('a:first').text(response.data.title);
+                tbm.main.sendRequest('/bookmark/item/update', {
+                    id: id,
+                    title: title,
+                }, function(response) {
+                    $(target).hide().next().show().find('a:first').text(response.body.bookmark.title);
                 });
 
                 e.preventDefault();
