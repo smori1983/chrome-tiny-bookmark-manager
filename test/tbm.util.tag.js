@@ -2,7 +2,7 @@ QUnit.module('tbm.util.tag', {
     beforeEach: function() {
     },
     afterEach: function() {
-    }
+    },
 });
 
 QUnit.cases.init([

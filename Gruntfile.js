@@ -103,7 +103,14 @@ grunt.initConfig({
                 "src/js/tbm/util.js",
                 "src/js/tbm/setting.js",
                 "src/js/tbm/background.HEAD.js",
-                "src/js/tbm/background.*.js"
+                "src/js/tbm/background.user.favoriteQuery.js",
+                "src/js/tbm/background.user.query.js",
+                "src/js/tbm/bookmarkUtil.js",
+                "src/js/tbm/bookmarkDataBuilder.js",
+                "src/js/tbm/bookmarkSearch.js",
+                "src/js/tbm/bookmarkManager.js",
+                "src/js/tbm/background.server2.js",
+                "src/js/tbm/background.serverFactory.js"
             ],
             dest: "<%= dist %>/js/tbm.background.js"
         },
@@ -149,16 +156,11 @@ grunt.initConfig({
             dest: "<%= dist %>/js/main.popup.js"
         }
     },
-    jshint: {
+    eslint: {
         options: {
-            force: true,
-            browser: true,
-            curly: true,
-            eqeqeq: true,
-            forin: true
+            configFile: ".eslintrc"
         },
-        all: [
-            "Gruntfile.js",
+        target: [
             "src/js/main/*.js",
             "src/js/tbm/*.js",
             "test/**/*.js"
@@ -166,22 +168,24 @@ grunt.initConfig({
     },
     watch: {
         files: [
+            "Gruntfile.js",
             "src/js/tbm/*.js",
             "src/js/main/*.js",
             "test/**/*.html",
-            "test/**/*.js"
+            "test/**/*.js",
+            "test_lib/**/*.js"
         ],
-        tasks: ["jshint", "qunit"]
+        tasks: ["eslint", "qunit"]
     }
 });
 
 grunt.loadNpmTasks("grunt-contrib-clean");
 grunt.loadNpmTasks("grunt-contrib-concat");
 grunt.loadNpmTasks("grunt-contrib-copy");
-grunt.loadNpmTasks("grunt-contrib-jshint");
 grunt.loadNpmTasks("grunt-contrib-qunit");
 grunt.loadNpmTasks("grunt-contrib-watch");
+grunt.loadNpmTasks("grunt-eslint");
 
-grunt.registerTask("default", ["jshint", "clean", "copy", "concat"]);
+grunt.registerTask("default", ["eslint", "clean", "copy", "concat"]);
 
 };

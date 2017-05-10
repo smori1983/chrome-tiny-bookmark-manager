@@ -10,7 +10,7 @@ QUnit.module('tbm.background.user.query', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('getLatest', function(assert) {

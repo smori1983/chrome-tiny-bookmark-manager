@@ -4,7 +4,7 @@ QUnit.module('tbm.setting', {
     },
     afterEach: function() {
         localStorage.clear();
-    }
+    },
 });
 
 QUnit.test('latest_query - default value', function(assert) {
