@@ -1,5 +1,6 @@
 *.swp
 /.env
+/.idea
 /dist
 /js/main.*
 /js/tbm.*
