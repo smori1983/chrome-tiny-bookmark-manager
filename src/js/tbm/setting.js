@@ -2,30 +2,54 @@
  * tbm.setting
  */
 tbm.setting = (function() {
-    var that   = {},
-        prefix = 'setting.log',
+    var that   = {};
+    var prefix = 'setting.log';
 
-        defaults = {
-            'latest_query': 'yes',
-            'query_store_days': '30',
-        };
+    var defaults = {
+        'latest_query': 'yes',
+        'query_store_days': '30',
+    };
+
+    var isValidKey = function(key) {
+        return defaults.hasOwnProperty(key);
+    };
 
     var getKey = function(key) {
         return [prefix, key].join('.');
     };
 
+    /**
+     * keys:
+     * - latest_query
+     * - query_store_days
+     *
+     * @param string key setting key
+     * @param string value setting value
+     */
     that.set = function(key, value) {
-        smodules.storage.set(getKey(key), value);
+        if (isValidKey(key)) {
+            smodules.storage.set(getKey(key), value);
+        }
     };
 
+    /**
+     * keys:
+     * - latest_query
+     * - query_store_days
+     *
+     * @param string key setting key
+     * @param string value setting value
+     */
     that.get = function(key) {
-        var data = smodules.storage.get(getKey(key));
+        var data;
 
-        if (data === null && defaults.hasOwnProperty(key)) {
-            return defaults[key];
-        } else {
-            return data;
+        if (isValidKey(key)) {
+            data = smodules.storage.get(getKey(key));
+
+            return data === null ? defaults[key] : data;
         }
+
+        return null;
     };
 
     return that;

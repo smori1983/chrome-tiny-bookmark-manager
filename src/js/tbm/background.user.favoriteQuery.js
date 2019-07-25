@@ -7,18 +7,18 @@
  * getAll()
  */
 tbm.background.user.favoriteQuery = (function() {
-    var that = {},
-        key  = 'user.favorite',
+    var that = {};
+    var key  = 'user.favorite';
 
-        timestamp = null,
-        data = null;
+    var timestamp = null;
+    var data = null;
 
     var time = function() {
         timestamp = new Date().getTime();
     };
 
-    var load = function() {
-        if (data === null) {
+    var load = function(force) {
+        if (force === true || data === null) {
             data = smodules.storage.getJSON(key, []);
             time();
         }
@@ -36,6 +36,10 @@ tbm.background.user.favoriteQuery = (function() {
     };
 
     load();
+
+    that.reload = function() {
+        load(true);
+    };
 
     that.add = function(query) {
         if (!contains(query)) {

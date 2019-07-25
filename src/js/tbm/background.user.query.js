@@ -10,22 +10,22 @@
  * getFrequent()
  */
 tbm.background.user.query = (function() {
-    var that = {},
-        key  = 'user.query',
+    var that = {};
+    var key  = 'user.query';
 
-        timestamp = null,
-        data = null,
+    var timestamp = null;
+    var data = null;
 
-        storeDays         = 28,
-        recentFetchSize   = 20,
-        frequentFetchSize = 20;
+    var storeDays         = 28;
+    var recentFetchSize   = 20;
+    var frequentFetchSize = 20;
 
     var time = function() {
         timestamp = new Date().getTime();
     };
 
-    var load = function() {
-        if (data === null) {
+    var load = function(force) {
+        if (force === true || data === null) {
             data = smodules.storage.getJSON(key, []);
             time();
         }
@@ -45,6 +45,10 @@ tbm.background.user.query = (function() {
     };
 
     load();
+
+    that.reload = function() {
+        load(true);
+    };
 
     that.setStoreDays = function(days) {
         if (typeof days === 'number') {
@@ -89,24 +93,29 @@ tbm.background.user.query = (function() {
     };
 
     that.getFrequent = function() {
-        var summary, array = [];
+        var summary = {};
+        var array = [];
 
-        summary = data.reduce(function(prev, current, index, array) {
-            if (prev.hasOwnProperty(current.query)) {
-                prev[current.query] += 1;
-            } else {
-                prev[current.query] = 1;
-            }
-            return prev;
-        }, {});
+        data.forEach(function(item) {
+            summary[item.query] = 0;
+        });
 
-        $.each(summary, function(query, count) {
+        data.forEach(function(item) {
+            summary[item.query] += 1;
+        });
+
+        Object.keys(summary).forEach(function(query) {
             array.push({
                 query: query,
-                count: count,
+                count: summary[query],
             });
         });
+
         array.sort(function(a, b) {
+            if (a.count === b.count) {
+                return a.query < b.query ? -1 : 1;
+            }
+
             return b.count - a.count;
         });
 
