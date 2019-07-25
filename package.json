@@ -5,6 +5,9 @@
   "main": "grunt.js",
   "dependencies": {},
   "devDependencies": {
+    "@types/chrome": "0.0.86",
+    "@types/jquery": "^3.3.30",
+    "@types/node": "^12.6.8",
     "cross-env": "*",
     "dotenv": "*",
     "eslint": "3.*",
