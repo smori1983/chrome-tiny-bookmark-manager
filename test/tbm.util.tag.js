@@ -1,11 +1,12 @@
 QUnit.module('tbm.util.tag', {
-    beforeEach: function() {
-    },
-    afterEach: function() {
-    },
+  beforeEach: function() {
+  },
+  afterEach: function() {
+  },
 });
 
-QUnit.cases.init([
+QUnit.cases
+  .init([
     { input: null, output: '' },
     { input: true, output: '' },
     { input: false, output: '' },
@@ -24,7 +25,7 @@ QUnit.cases.init([
 
     { input: '{{strong:hoge}}', output: '<strong>hoge</strong>' },
     { input: '{{code:hoge}}', output: '<code>hoge</code>' },
-]).
-test('tests', function(params, assert) {
+  ])
+  .test('tests', function(params, assert) {
     assert.equal(tbm.util.tag(params.input), params.output);
-});
+  });

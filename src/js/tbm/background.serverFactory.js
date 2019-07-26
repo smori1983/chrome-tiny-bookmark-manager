@@ -1,12 +1,12 @@
 tbm.background.serverFactory = (function() {
-    var that = {};
+  var that = {};
 
-    /**
-     * @param chrome.bookmarks bookmarksApi
-     */
-    that.create = function(bookmarksApi) {
-        return tbm.background.server2(bookmarksApi);
-    };
+  /**
+   * @param chrome.bookmarks bookmarksApi
+   */
+  that.create = function(bookmarksApi) {
+    return tbm.background.server2(bookmarksApi);
+  };
 
-    return that;
+  return that;
 })();
