@@ -8,7 +8,7 @@ tbm.bookmarkSearch = (function() {
   };
 
   var regexQuote = function(value) {
-    return value.replace(/[\^\$\.\?\*\+\-\\\/\:\=\!\,\(\)\[\]\{\}]/g, function(matched) {
+    return value.replace(/[\^$.?*+\-\\/:=!,()[\]{}]/g, function(matched) {
       return '\\' + matched;
     });
   };

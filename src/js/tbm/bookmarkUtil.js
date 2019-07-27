@@ -12,7 +12,7 @@ tbm.bookmarkUtil = (function() {
   that.getTags = function(title) {
     var input = title.trimLeft();
     var tags = [];
-    var pattern = /^\[([^\[\]]+)\]/;
+    var pattern = /^\[([^[\]]+)\]/;
     var matched;
 
     while ((matched = pattern.exec(input))) {
