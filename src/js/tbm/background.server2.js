@@ -6,9 +6,13 @@ tbm.background.server2 = function(bookmarksApi) {
 
   var manager = tbm.bookmarkManager(bookmarksApi);
 
+  var hasProperty = function(obj, key) {
+    return Object.prototype.hasOwnProperty.call(obj, key);
+  };
+
   var jobs = {
     '/bookmark/search': function(params, callback) {
-      if (!params.hasOwnProperty('query')) {
+      if (!hasProperty(params, 'query')) {
         error('invalid params: query is required.');
       }
 
@@ -36,10 +40,10 @@ tbm.background.server2 = function(bookmarksApi) {
       });
     },
     '/bookmark/item/update': function(params, callback) {
-      if (!params.hasOwnProperty('id')) {
+      if (!hasProperty(params, 'id')) {
         error('invalid params: id is required.');
       }
-      if (!params.hasOwnProperty('title')) {
+      if (!hasProperty(params, 'title')) {
         error('invalid params: title is required.');
       }
 
@@ -76,7 +80,7 @@ tbm.background.server2 = function(bookmarksApi) {
       });
     },
     '/user/query/add': function(params, callback) {
-      if (!params.hasOwnProperty('query')) {
+      if (!hasProperty(params, 'query')) {
         error('invalid params: query is required.');
       }
 
@@ -98,7 +102,7 @@ tbm.background.server2 = function(bookmarksApi) {
       });
     },
     '/user/query/favorite/add': function(params, callback) {
-      if (!params.hasOwnProperty('query')) {
+      if (!hasProperty(params, 'query')) {
         error('invalid params: query is required.');
       }
 
@@ -109,7 +113,7 @@ tbm.background.server2 = function(bookmarksApi) {
       callback({});
     },
     '/user/query/favorite/remove': function(params, callback) {
-      if (!params.hasOwnProperty('query')) {
+      if (!hasProperty(params, 'query')) {
         error('invalid params: query is required.');
       }
 
@@ -120,7 +124,7 @@ tbm.background.server2 = function(bookmarksApi) {
       callback({});
     },
     '/user/query/favorite/check': function(params, callback) {
-      if (!params.hasOwnProperty('query')) {
+      if (!hasProperty(params, 'query')) {
         error('invalid params: query is required.');
       }
 
@@ -137,7 +141,7 @@ tbm.background.server2 = function(bookmarksApi) {
   };
 
   var checkPath = function(path) {
-    if (!jobs.hasOwnProperty(path)) {
+    if (!hasProperty(jobs, path)) {
       error('path not found.');
     }
   };

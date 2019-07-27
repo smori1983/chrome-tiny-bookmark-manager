@@ -11,7 +11,7 @@ tbm.setting = (function() {
   };
 
   var isValidKey = function(key) {
-    return defaults.hasOwnProperty(key);
+    return Object.prototype.hasOwnProperty.call(defaults, key);
   };
 
   var getKey = function(key) {

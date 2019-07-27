@@ -22,7 +22,7 @@ tbm.bookmarkDataBuilder = (function() {
   };
 
   var isBookmarkNode = function (bookmarkTreeNode) {
-    return bookmarkTreeNode.hasOwnProperty('url');
+    return Object.prototype.hasOwnProperty.call(bookmarkTreeNode, 'url');
   };
 
   var addBookmark = function(result, node, folderStack) {

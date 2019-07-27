@@ -94,7 +94,7 @@ tbm.bookmarkManager = function(bookmarksApi) {
   };
 
   that.updateBookmark = function(id, params, callback) {
-    if (!params.hasOwnProperty('title')) {
+    if (!Object.prototype.hasOwnProperty.call(params, 'title')) {
       return;
     }
 
