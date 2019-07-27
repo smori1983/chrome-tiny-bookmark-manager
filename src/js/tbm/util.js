@@ -13,8 +13,8 @@ tbm.util.tag = (function() {
    * - code
    * - strong
    *
-   * @param string value
-   * @return string
+   * @param {string} value
+   * @returns {string}
    */
   return function(value) {
     if (typeof value !== 'string') {
@@ -62,11 +62,16 @@ tbm.util.i18n = (function() {
 })();
 
 /**
- * @param array array array to be accessed.
- * @param function callback function to be called for each array element or elements.
- * @param int interval milliseconds to wait for delay.
- * @param int step size access in one time.
- * @param bool together when true argument of callback function is an array of elements.
+ * @typedef DelayedArraySpec
+ * @property {*} array array to be accessed.
+ * @property {function} callback function to be called for each array element or elements.
+ * @property {number} interval milliseconds to wait for delay.
+ * @property {number} step size access in one time.
+ * @property {boolean} together when true argument of callback function is an array of elements.
+ */
+
+/**
+ * @param {DelayedArraySpec} spec
  */
 tbm.util.delayedArrayAccess = function(spec) {
   if (!$.isArray(spec.array) ||

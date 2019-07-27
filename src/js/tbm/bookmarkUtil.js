@@ -6,8 +6,8 @@ tbm.bookmarkUtil = (function() {
    *
    * tag pattern: [xxx]
    *
-   * @param string title
-   * @return string[]
+   * @param {string} title
+   * @returns {string[]}
    */
   that.getTags = function(title) {
     var input = title.trimLeft();
@@ -26,9 +26,9 @@ tbm.bookmarkUtil = (function() {
   /**
    * Creates the title with folder names.
    *
-   * @param string title
-   * @param string[] folders
-   * @return string
+   * @param {string} title
+   * @param {string[]} folders
+   * @returns {string}
    */
   that.getFullTitle = function(title, folders) {
     // The first elements of folders are one of:

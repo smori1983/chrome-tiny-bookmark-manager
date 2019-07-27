@@ -23,8 +23,8 @@ tbm.setting = (function() {
    * - latest_query
    * - query_store_days
    *
-   * @param string key setting key
-   * @param string value setting value
+   * @param {string} key setting key
+   * @param {string} value setting value
    */
   that.set = function(key, value) {
     if (isValidKey(key)) {
@@ -37,8 +37,8 @@ tbm.setting = (function() {
    * - latest_query
    * - query_store_days
    *
-   * @param string key setting key
-   * @param string value setting value
+   * @param {string} key setting key
+   * @returns {(string|null)}
    */
   that.get = function(key) {
     var data;

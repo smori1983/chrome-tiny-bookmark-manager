@@ -1,11 +1,16 @@
 /**
- * @param chrome.bookmarks bookmarksApi
+ * @param {chrome.bookmarks} bookmarksApi
  */
 tbm.background.server2 = function(bookmarksApi) {
   var that = {};
 
   var manager = tbm.bookmarkManager(bookmarksApi);
 
+  /**
+   * @param {Object} obj
+   * @param {string} key
+   * @returns {boolean}
+   */
   var hasProperty = function(obj, key) {
     return Object.prototype.hasOwnProperty.call(obj, key);
   };
@@ -136,24 +141,43 @@ tbm.background.server2 = function(bookmarksApi) {
     },
   };
 
+  /**
+   * @param {string} message
+   * @throws {Error}
+   */
   var error = function(message) {
     throw new Error(message);
   };
 
+  /**
+   * @param {string} path
+   * @throws {Error}
+   */
   var checkPath = function(path) {
     if (!hasProperty(jobs, path)) {
       error('path not found.');
     }
   };
 
+  /**
+   * @param {function} callback
+   */
   that.start = function(callback) {
     manager.init(callback);
   };
 
+  /**
+   * @param {function} callback
+   */
   that.crawl = function(callback) {
     manager.update(callback);
   };
 
+  /**
+   * @param {string} path
+   * @param {string[]} params
+   * @param {function} responseCallback
+   */
   that.request = function(path, params, responseCallback) {
     var request = {
       path: path,

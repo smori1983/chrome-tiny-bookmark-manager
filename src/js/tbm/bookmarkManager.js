@@ -1,5 +1,5 @@
 /**
- * @param chrome.bookmarks bookmarksApi
+ * @param {chrome.bookmarks} bookmarksApi
  */
 tbm.bookmarkManager = function(bookmarksApi) {
   var that = {};

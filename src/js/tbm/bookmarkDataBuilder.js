@@ -7,6 +7,11 @@ tbm.bookmarkDataBuilder = (function() {
 
   var that = {};
 
+  /**
+   * @param {BookmarkTmpDataSet} result
+   * @param {chrome.bookmarks.BookmarkTreeNode} bookmarkTreeNode
+   * @param {string[]} folderStack
+   */
   var walkFolder = function (result, bookmarkTreeNode, folderStack) {
     bookmarkTreeNode.children.forEach(function(node) {
       if (isBookmarkNode(node)) {
@@ -21,10 +26,19 @@ tbm.bookmarkDataBuilder = (function() {
     });
   };
 
+  /**
+   * @param {chrome.bookmarks.BookmarkTreeNode} bookmarkTreeNode
+   * @returns {boolean}
+   */
   var isBookmarkNode = function (bookmarkTreeNode) {
     return Object.prototype.hasOwnProperty.call(bookmarkTreeNode, 'url');
   };
 
+  /**
+   * @param {BookmarkTmpDataSet} result
+   * @param {chrome.bookmarks.BookmarkTreeNode} node
+   * @param {string[]} folderStack
+   */
   var addBookmark = function(result, node, folderStack) {
     var bookmark = {
       id: node.id,
@@ -37,24 +51,40 @@ tbm.bookmarkDataBuilder = (function() {
     result.bookmarks.push(bookmark);
   };
 
+  /**
+   * @param {BookmarkTmpDataSet} result
+   * @param {string} folderName
+   */
   var addFolder = function (result, folderName) {
     if (result.folders.indexOf(folderName) < 0) {
       result.folders.push(folderName);
     }
   };
 
+  /**
+   * @param {BookmarkTmpDataSet} result
+   * @param {string} title
+   */
   var addTags = function (result, title) {
     util.getTags(title).forEach(function(tagName) {
       addTag(result, tagName);
     });
   };
 
+  /**
+   * @param {BookmarkTmpDataSet} result
+   * @param {string} tagName
+   */
   var addTag = function (result, tagName) {
     if (result.tags.indexOf(tagName) < 0) {
       result.tags.push(tagName);
     }
   };
 
+  /**
+   * @param {string[]} folders
+   * @returns {Folder[]}
+   */
   var prepareFolders = function(folders) {
     var result = [];
 
@@ -65,6 +95,10 @@ tbm.bookmarkDataBuilder = (function() {
     return result;
   };
 
+  /**
+   * @param {string[]} tags
+   * @returns {Tag[]}
+   */
   var prepareTags = function(tags) {
     var result = [];
 
@@ -76,8 +110,8 @@ tbm.bookmarkDataBuilder = (function() {
   };
 
   /**
-   * @param BookmarkTreeNode rootNode
-   * @return object
+   * @param {chrome.bookmarks.BookmarkTreeNode} rootNode
+   * @returns {BookmarkDataSet}
    */
   that.build = function(rootNode) {
     var tmp = {
@@ -100,3 +134,36 @@ tbm.bookmarkDataBuilder = (function() {
 
   return that;
 })();
+
+/**
+ * @typedef BookmarkTmpDataSet
+ * @property {Bookmark[]} bookmarks
+ * @property {string[]} folders
+ * @property {string[]} tags
+ */
+
+/**
+ * @typedef BookmarkDataSet
+ * @property {Bookmark[]} bookmarks
+ * @property {Folder[]} folders
+ * @property {Tag[]} tags
+ */
+
+/**
+ * @typedef Bookmark
+ * @property {string} id
+ * @property {string} title
+ * @property {string} fullTitle
+ * @property {string} url
+ * @property {string[]} folders
+ */
+
+/**
+ * @typedef Folder
+ * @property {string} name
+ */
+
+/**
+ * @typedef Tag
+ * @property {string} name
+ */
