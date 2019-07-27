@@ -9,7 +9,9 @@
     "lint": "eslint -c .eslintrc src/js/main src/js/tbm test; exit 0;",
     "lint:fix": "eslint -c .eslintrc --fix src/js/main src/js/tbm test; exit 0;",
     "test": "grunt qunit",
-    "watch": "grunt watch"
+    "watch": "grunt watch",
+    "watch:lint": "watch 'npm run lint' src/ test/ --interval=1 --ignoreDotFiles",
+    "watch:test": "watch 'npm run test' src/ test/ --interval=1 --ignoreDotFiles"
   },
   "dependencies": {},
   "devDependencies": {
@@ -27,7 +29,8 @@
     "grunt-contrib-qunit": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "*",
-    "sprintf-js": "*"
+    "sprintf-js": "*",
+    "watch": "^1.0.2"
   },
   "repository": {
     "type": "git",
