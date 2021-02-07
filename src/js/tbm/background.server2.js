@@ -1,179 +1,207 @@
 /**
- * @param chrome.bookmarks bookmarksApi
+ * @param {chrome.bookmarks} bookmarksApi
  */
 tbm.background.server2 = function(bookmarksApi) {
-    var that = {};
+  var that = {};
 
-    var manager = tbm.bookmarkManager(bookmarksApi);
+  var manager = tbm.bookmarkManager(bookmarksApi);
 
-    var jobs = {
-        '/bookmark/search': function(params, callback) {
-            if (!params.hasOwnProperty('query')) {
-                error('invalid params: query is required.');
-            }
+  /**
+   * @param {Object} obj
+   * @param {string} key
+   * @returns {boolean}
+   */
+  var hasProperty = function(obj, key) {
+    return Object.prototype.hasOwnProperty.call(obj, key);
+  };
 
-            callback({
-                timestamp: manager.getTimestamp(),
-                data: manager.getBookmarks(params.query),
-            });
-        },
-        '/bookmark/bookmarks': function(params, callback) {
-            callback({
-                timestamp: manager.getTimestamp(),
-                data: manager.getBookmarks(params.query || null),
-            });
-        },
-        '/bookmark/folders': function(params, callback) {
-            callback({
-                timestamp: manager.getTimestamp(),
-                data: manager.getFolders(),
-            });
-        },
-        '/bookmark/tags': function(params, callback) {
-            callback({
-                timestamp: manager.getTimestamp(),
-                data: manager.getTags(),
-            });
-        },
-        '/bookmark/item/update': function(params, callback) {
-            if (!params.hasOwnProperty('id')) {
-                error('invalid params: id is required.');
-            }
-            if (!params.hasOwnProperty('title')) {
-                error('invalid params: title is required.');
-            }
+  var jobs = {
+    '/bookmark/search': function(params, callback) {
+      if (!hasProperty(params, 'query')) {
+        error('invalid params: query is required.');
+      }
 
-            manager.updateBookmark(params.id, {
-                title: params.title,
-            }, function(updated) {
-                callback({
-                    bookmark: updated,
-                });
-            });
-        },
-        '/user/query/latest': function(params, callback) {
-            var module = tbm.background.user.query;
+      callback({
+        timestamp: manager.getTimestamp(),
+        data: manager.getBookmarks(params.query),
+      });
+    },
+    '/bookmark/bookmarks': function(params, callback) {
+      callback({
+        timestamp: manager.getTimestamp(),
+        data: manager.getBookmarks(params.query || null),
+      });
+    },
+    '/bookmark/folders': function(params, callback) {
+      callback({
+        timestamp: manager.getTimestamp(),
+        data: manager.getFolders(),
+      });
+    },
+    '/bookmark/tags': function(params, callback) {
+      callback({
+        timestamp: manager.getTimestamp(),
+        data: manager.getTags(),
+      });
+    },
+    '/bookmark/item/update': function(params, callback) {
+      if (!hasProperty(params, 'id')) {
+        error('invalid params: id is required.');
+      }
+      if (!hasProperty(params, 'title')) {
+        error('invalid params: title is required.');
+      }
 
-            callback({
-                timestamp: module.getTimestamp(),
-                data: module.getLatest(),
-            });
-        },
-        '/user/query/recent': function(params, callback) {
-            var module = tbm.background.user.query;
+      manager.updateBookmark(params.id, {
+        title: params.title,
+      }, function(updated) {
+        callback({
+          bookmark: updated,
+        });
+      });
+    },
+    '/user/query/latest': function(params, callback) {
+      var module = tbm.background.user.query;
 
-            callback({
-                timestamp: module.getTimestamp(),
-                data: module.getRecent(),
-            });
-        },
-        '/user/query/frequent': function(params, callback) {
-            var module = tbm.background.user.query;
+      callback({
+        timestamp: module.getTimestamp(),
+        data: module.getLatest(),
+      });
+    },
+    '/user/query/recent': function(params, callback) {
+      var module = tbm.background.user.query;
 
-            callback({
-                timestamp: module.getTimestamp(),
-                data: module.getFrequent(),
-            });
-        },
-        '/user/query/add': function(params, callback) {
-            if (!params.hasOwnProperty('query')) {
-                error('invalid params: query is required.');
-            }
+      callback({
+        timestamp: module.getTimestamp(),
+        data: module.getRecent(),
+      });
+    },
+    '/user/query/frequent': function(params, callback) {
+      var module = tbm.background.user.query;
 
-            var module = tbm.background.user.query;
+      callback({
+        timestamp: module.getTimestamp(),
+        data: module.getFrequent(),
+      });
+    },
+    '/user/query/add': function(params, callback) {
+      if (!hasProperty(params, 'query')) {
+        error('invalid params: query is required.');
+      }
 
-            module.add(params.query);
+      var module = tbm.background.user.query;
 
-            callback({
-                timestamp: module.getTimestamp(),
-                data: null,
-            });
-        },
-        '/user/query/favorite/list': function(params, callback) {
-            var module = tbm.background.user.favoriteQuery;
+      module.add(params.query);
 
-            callback({
-                timestamp: module.getTimestamp(),
-                data: module.getAll(),
-            });
-        },
-        '/user/query/favorite/add': function(params, callback) {
-            if (!params.hasOwnProperty('query')) {
-                error('invalid params: query is required.');
-            }
+      callback({
+        timestamp: module.getTimestamp(),
+        data: null,
+      });
+    },
+    '/user/query/favorite/list': function(params, callback) {
+      var module = tbm.background.user.favoriteQuery;
 
-            var module = tbm.background.user.favoriteQuery;
+      callback({
+        timestamp: module.getTimestamp(),
+        data: module.getAll(),
+      });
+    },
+    '/user/query/favorite/add': function(params, callback) {
+      if (!hasProperty(params, 'query')) {
+        error('invalid params: query is required.');
+      }
 
-            module.add(params.query);
+      var module = tbm.background.user.favoriteQuery;
 
-            callback({});
-        },
-        '/user/query/favorite/remove': function(params, callback) {
-            if (!params.hasOwnProperty('query')) {
-                error('invalid params: query is required.');
-            }
+      module.add(params.query);
 
-            var module = tbm.background.user.favoriteQuery;
+      callback({});
+    },
+    '/user/query/favorite/remove': function(params, callback) {
+      if (!hasProperty(params, 'query')) {
+        error('invalid params: query is required.');
+      }
 
-            module.remove(params.query);
+      var module = tbm.background.user.favoriteQuery;
 
-            callback({});
-        },
-        '/user/query/favorite/check': function(params, callback) {
-            if (!params.hasOwnProperty('query')) {
-                error('invalid params: query is required.');
-            }
+      module.remove(params.query);
 
-            var module = tbm.background.user.favoriteQuery;
+      callback({});
+    },
+    '/user/query/favorite/check': function(params, callback) {
+      if (!hasProperty(params, 'query')) {
+        error('invalid params: query is required.');
+      }
 
-            callback({
-                answer: module.check(params.query),
-            });
-        },
+      var module = tbm.background.user.favoriteQuery;
+
+      callback({
+        answer: module.check(params.query),
+      });
+    },
+  };
+
+  /**
+   * @param {string} message
+   * @throws {Error}
+   */
+  var error = function(message) {
+    throw new Error(message);
+  };
+
+  /**
+   * @param {string} path
+   * @throws {Error}
+   */
+  var checkPath = function(path) {
+    if (!hasProperty(jobs, path)) {
+      error('path not found.');
+    }
+  };
+
+  /**
+   * @param {function} callback
+   */
+  that.start = function(callback) {
+    manager.init(callback);
+  };
+
+  /**
+   * @param {function} callback
+   */
+  that.crawl = function(callback) {
+    manager.update(callback);
+  };
+
+  /**
+   * @param {string} path
+   * @param {string[]} params
+   * @param {function} responseCallback
+   */
+  that.request = function(path, params, responseCallback) {
+    var request = {
+      path: path,
+      params: params,
     };
 
-    var error = function(message) {
-        throw new Error(message);
-    };
+    try {
+      checkPath(path);
 
-    var checkPath = function(path) {
-        if (!jobs.hasOwnProperty(path)) {
-            error('path not found.');
-        }
-    };
+      jobs[path](params, function(body) {
+        responseCallback({
+          request: request,
+          status: 'ok',
+          body: body,
+        });
+      });
+    } catch (e) {
+      responseCallback({
+        request: request,
+        status: 'error',
+        message: e.message,
+      });
+    }
+  };
 
-    that.start = function(callback) {
-        manager.init(callback);
-    };
-
-    that.crawl = function(callback) {
-        manager.update(callback);
-    };
-
-    that.request = function(path, params, responseCallback) {
-        var request = {
-            path: path,
-            params: params,
-        };
-
-        try {
-            checkPath(path);
-
-            jobs[path](params, function(body) {
-                responseCallback({
-                    request: request,
-                    status: 'ok',
-                    body: body,
-                });
-            });
-        } catch (e) {
-            responseCallback({
-                request: request,
-                status: 'error',
-                message: e.message,
-            });
-        }
-    };
-
-    return that;
+  return that;
 };

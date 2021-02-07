@@ -3,11 +3,24 @@
   "version": "0.5.0",
   "description": "Supports bookmark search.",
   "main": "grunt.js",
+  "scripts": {
+    "build:prod": "cross-env EXTENSION_MODE=production grunt",
+    "build:dev": "cross-env EXTENSION_MODE=development grunt",
+    "lint": "eslint -c .eslintrc src/js/main src/js/tbm test; exit 0;",
+    "lint:fix": "eslint -c .eslintrc --fix src/js/main src/js/tbm test; exit 0;",
+    "test": "grunt qunit",
+    "watch": "grunt watch",
+    "watch:lint": "watch 'npm run lint' src/ test/ --interval=1 --ignoreDotFiles",
+    "watch:test": "watch 'npm run test' src/ test/ --interval=1 --ignoreDotFiles"
+  },
   "dependencies": {},
   "devDependencies": {
+    "@types/chrome": "0.0.86",
+    "@types/jquery": "^3.3.30",
+    "@types/node": "^12.6.8",
     "cross-env": "*",
     "dotenv": "*",
-    "eslint": "3.*",
+    "eslint": "^6.1.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.1.0",
@@ -16,15 +29,8 @@
     "grunt-contrib-qunit": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "*",
-    "sprintf-js": "*"
-  },
-  "scripts": {
-    "build:prod": "cross-env EXTENSION_MODE=production grunt",
-    "build:dev": "cross-env EXTENSION_MODE=development grunt",
-    "lint": "eslint -c .eslintrc src/js/main src/js/tbm test; exit 0;",
-    "lint:fix": "eslint -c .eslintrc --fix src/js/main src/js/tbm test; exit 0;",
-    "test": "grunt qunit",
-    "watch": "grunt watch"
+    "sprintf-js": "*",
+    "watch": "^1.0.2"
   },
   "repository": {
     "type": "git",
